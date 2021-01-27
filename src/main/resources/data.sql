@@ -1,0 +1,1 @@
+insert into subject values( 101,'Nesto', 1);
