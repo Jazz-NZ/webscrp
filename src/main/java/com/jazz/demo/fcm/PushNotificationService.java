@@ -41,8 +41,8 @@ public class PushNotificationService {
         }
     }
     //odavde se salje obavestenje
-    public void sendTopic(NewNotification newNot) throws FirebaseMessagingException {
-    	String topic = "highScores";
+    public void sendTopic(NewNotification newNot, String topic) throws FirebaseMessagingException {
+    	//String topic = "Matematika1"; //highScores
 
     	// See documentation on defining a message payload.
     	Message message = Message.builder()

@@ -32,7 +32,10 @@ public class PushNotificationController {
     
     
     public ResponseEntity sendNotification() throws FirebaseMessagingException {
-    	pushNotificationService.sendTopic(newNot);
+    	NewNotification newNot = new NewNotification();
+    	newNot.setPoruka("Poruka");
+    	newNot.setPredmet("Predmet");
+    	pushNotificationService.sendTopic(newNot,"Matematika1");
         return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
     }
 

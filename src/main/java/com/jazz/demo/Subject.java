@@ -11,9 +11,16 @@ public class Subject {
 	
 	private int vest;
 	private String poruka;
+	private String topic;
 	
 	
 	
+	public String getPredmet() {
+		return topic;
+	}
+	public void setPredmet(String predmet) {
+		this.topic = predmet;
+	}
 	public int getId() {
 		return id;
 	}

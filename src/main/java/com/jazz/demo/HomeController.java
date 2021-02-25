@@ -101,12 +101,12 @@ public class HomeController {
 			mata.setPoruka(neki.getPoruka());
 			
 			newNot.setPoruka(mata.getPoruka());
-			newNot.setPredmet("Matematika 1");
+			newNot.setPredmet("Matematika");
 			
 			//salje obavestenje samo kada je izasno novo
 			
 			 try {
-					pushNotificaitonService.sendTopic(newNot);
+					pushNotificaitonService.sendTopic(newNot,"Matematika1");
 					
 					
 				} catch (FirebaseMessagingException e) {
@@ -179,7 +179,7 @@ public class HomeController {
 		
 		for(int i = 0; i<list.size(); i++) {
 			
-			subjects.add( data.getMathAll(mathUrl+list.get(i)));
+			subjects.add( data.getMathAllVesti(mathUrl+list.get(i),list.get(i)));
 			
 			
 		}
