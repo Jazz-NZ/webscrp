@@ -58,10 +58,7 @@ public class DataFromSite {
 			
             
            // System.out.println(elements.select("li.recent-news-wrap").get(0));
-            
-            
-            
-            
+        
             
             String idStr  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
             
@@ -205,10 +202,6 @@ public Subject getMathAktivnosti() {
 			//System.out.println(elements);
             
             //System.out.println(elements.select("li").get(0));
-            
-            
-            
-            
             
             String idStr  = elements.select("li").get(0).select("a").first().attr("href");
             

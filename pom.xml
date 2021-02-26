@@ -85,17 +85,24 @@
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/jstl/jstl -->
-<dependency>
-    <groupId>jstl</groupId>
-    <artifactId>jstl</artifactId>
-    <version>1.2</version>
-</dependency>
+		<dependency>
+   	 		<groupId>jstl</groupId>
+   			<artifactId>jstl</artifactId>
+   	 		<version>1.2</version>
+		</dependency>
 
-<dependency>
-    <groupId>com.google.firebase</groupId>
-    <artifactId>firebase-admin</artifactId>
-    <version>6.8.1</version>
-</dependency>
+		<dependency>
+  		 	<groupId>com.google.firebase</groupId>
+    		<artifactId>firebase-admin</artifactId>
+   		 	<version>6.8.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+  			<groupId>mysql</groupId>
+    		<artifactId>mysql-connector-java</artifactId>
+   		 	<version>8.0.15</version>
+		</dependency>
 		
 
 	</dependencies>

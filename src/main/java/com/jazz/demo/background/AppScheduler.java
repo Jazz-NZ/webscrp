@@ -29,21 +29,26 @@ public class AppScheduler {
 	}
 
 	// Executes each 500 ms
-	@Scheduled(fixedRate = 15000)
+	@Scheduled(fixedRate = 20000)
 	public void checkRecords() {
-		System.err.println("Proslo 15s");
+		System.err.println("Proslo 20s");
 
 		int i = 0;
 
-		/*
-		 * NewNotification newNot = new NewNotification();
-		 * newNot.setPoruka(proveri.proveraMate().get(i).getPoruka());
-		 * newNot.setPredmet("Matematika 1");
-		 * 
-		 * NewNotification newNotAkt = new NewNotification();
-		 * newNotAkt.setPoruka(proveri.proveraAktivnosti().getPoruka());
-		 * newNotAkt.setPredmet("Matematika aktivnost");
-		 */
+		
+		ProveriMath proveraMate = new ProveriMath();
+		proveraMate.proveraMate();
+		
+//		  NewNotification newNot = new NewNotification();
+//		  newNot.setPoruka(proveri.proveraMate().get(i).getPoruka());
+//		  newNot.setPredmet("Matematika 1");
+		  
+		  
+//		  
+//		  NewNotification newNotAkt = new NewNotification();
+//		  newNotAkt.setPoruka(proveri.proveraAktivnosti().getPoruka());
+//		  newNotAkt.setPredmet("Matematika aktivnost");
+//		 
 		
 		/*
 		 * NewNotification newNot = new NewNotification();
