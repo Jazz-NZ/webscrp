@@ -3,12 +3,12 @@ package com.jazz.demo.background;
 import java.util.LinkedList;
 
 import com.jazz.demo.DataFromSite;
-import com.jazz.demo.Subject;
+import com.jazz.demo.Katedra;
 
 public class ProveriMMKLAB {
 
 	
-	public LinkedList<Subject> proveraMmklab(){
+	public LinkedList<Katedra> proveraMmklab(){
 		
 		DataFromSite data = new DataFromSite();
 
@@ -28,7 +28,7 @@ public class ProveriMMKLAB {
 		
 		
 		
-		LinkedList<Subject> subjects = new LinkedList<>();
+		LinkedList<Katedra> subjects = new LinkedList<>();
 
 		for (int i = 0; i < list.size(); i++) {
 

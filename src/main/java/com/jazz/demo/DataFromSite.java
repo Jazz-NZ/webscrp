@@ -19,7 +19,7 @@ public class DataFromSite {
 		this.poruka = poruka;
 	}
 
-	public Subject getMath(String url)  {
+	public Katedra getMath(String url)  {
 		
 		/*
 		 * int id = -1; String news = null;
@@ -75,7 +75,7 @@ public class DataFromSite {
 			System.err.println("Error with connecting to url or getting data from url");
 		}
 		
-		Subject sub = new Subject();
+		Katedra sub = new Katedra();
 		sub.setId(101);
 		sub.setVest(id);
 		sub.setPoruka(news);
@@ -83,7 +83,7 @@ public class DataFromSite {
 		return sub;
 	}
 	
-public Subject getMathAllVesti(String url, String predmet)  {
+public Katedra getMathAllVesti(String url, String predmet)  {
 		
 	int id = -1;
 	String news = null;
@@ -102,9 +102,6 @@ public Subject getMathAllVesti(String url, String predmet)  {
        // System.out.println(elements.select("li.recent-news-wrap").get(0));
         
         
-        
-        
-        
         String idStr  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
         
        // System.out.println(idStr);
@@ -119,11 +116,10 @@ public Subject getMathAllVesti(String url, String predmet)  {
 	}catch (Exception e) {
 		System.err.println("Error with connecting to url or getting data from url");
 	}
-
 	
 		//pogledaj ovo set id i vest
 		
-		Subject sub = new Subject();
+		Katedra sub = new Katedra();
 		sub.setId(101);
 		sub.setVest(id);
 		sub.setPoruka(news);
@@ -133,7 +129,7 @@ public Subject getMathAllVesti(String url, String predmet)  {
 	}
 		
 	
-public Subject getMathAktivnosti() {
+public Katedra getMathAktivnosti() {
 	
 	String url= "http://math.fon.bg.ac.rs/";
 	
@@ -172,7 +168,7 @@ public Subject getMathAktivnosti() {
 		System.err.println("Error with connecting to url or getting data from url");
 	}
 
-	Subject sub = new Subject();
+	Katedra sub = new Katedra();
 	sub.setId(101);
 	sub.setVest(id);
 	sub.setPoruka(news);
@@ -182,7 +178,7 @@ public Subject getMathAktivnosti() {
 	return sub;
 	}
 	
-	public Subject getMmklab(String url, String predmet) {
+	public Katedra getMmklab(String url, String predmet) {
 		
 		
 //String url= "http://www.mmklab.fon.bg.ac.rs/sr/nastava/osnovne-studije/oikt/";
@@ -220,7 +216,7 @@ public Subject getMathAktivnosti() {
 			System.err.println("Error with connecting to url or getting data from url");
 		}
 
-	Subject sub = new Subject();	
+	Katedra sub = new Katedra();	
 	sub.setId(101);
 	sub.setPoruka(news);
 	sub.setPredmet(predmet);
@@ -230,7 +226,7 @@ public Subject getMathAktivnosti() {
 	
 	}
 
-	public Subject getIS(String url, String predmet) {
+	public Katedra getIS(String url, String predmet) {
 		
 		int id = -1;
 		String news = null;
@@ -269,7 +265,7 @@ public Subject getMathAktivnosti() {
 			System.err.println("Error with connecting to url or getting data from url");
 		}
 
-		Subject sub = new Subject();
+		Katedra sub = new Katedra();
 		sub.setId(101);
 		sub.setVest(id);
 		sub.setPoruka(news);

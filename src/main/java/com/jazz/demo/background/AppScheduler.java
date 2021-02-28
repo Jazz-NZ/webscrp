@@ -1,5 +1,7 @@
 package com.jazz.demo.background;
 
+import java.util.LinkedList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -8,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.jazz.demo.DataFromSite;
 import com.jazz.demo.NewNotification;
-import com.jazz.demo.Subject;
+import com.jazz.demo.Katedra;
 import com.jazz.demo.fcm.PushNotificationService;
 
 @Service
@@ -35,9 +37,13 @@ public class AppScheduler {
 
 		int i = 0;
 
-		
 		ProveriMath proveraMate = new ProveriMath();
-		proveraMate.proveraMate();
+		LinkedList<Katedra> predmetiSaNovomVesti = proveraMate.proveraMate();
+		
+		System.out.println("Predmet za koje je izasla nova vest:");
+		for (Katedra subject : predmetiSaNovomVesti) {
+			System.out.println(subject.getPredmet());
+		}
 		
 //		  NewNotification newNot = new NewNotification();
 //		  newNot.setPoruka(proveri.proveraMate().get(i).getPoruka());

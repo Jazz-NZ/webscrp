@@ -4,10 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity //jpa dependency
-public class Subject {
+public class Katedra {   //da klasa subject bude katedra
 	
 	@Id
-	private int id;
+	private int id; // obrisati id i vest
 	
 	private int vest;
 	private String poruka;
@@ -15,7 +15,7 @@ public class Subject {
 	
 	
 	
-	public String getPredmet() {
+	public String getPredmet() { // topic da bude predmet
 		return topic;
 	}
 	public void setPredmet(String predmet) {

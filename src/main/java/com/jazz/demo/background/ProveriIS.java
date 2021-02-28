@@ -3,11 +3,11 @@ package com.jazz.demo.background;
 import java.util.LinkedList;
 
 import com.jazz.demo.DataFromSite;
-import com.jazz.demo.Subject;
+import com.jazz.demo.Katedra;
 
 public class ProveriIS {
 	
-	public LinkedList<Subject> proveraIsVesti(){
+	public LinkedList<Katedra> proveraIsVesti(){
 		
 		DataFromSite data = new DataFromSite();
 
@@ -26,7 +26,7 @@ public class ProveriIS {
 		
 		
 		
-		LinkedList<Subject> subjects = new LinkedList<>();
+		LinkedList<Katedra> subjects = new LinkedList<>();
 
 		for (int i = 0; i < list.size(); i++) {
 
@@ -39,7 +39,7 @@ public class ProveriIS {
 
 	
 	
-	public LinkedList<Subject> proveraIsRezultati(){
+	public LinkedList<Katedra> proveraIsRezultati(){
 		
 		DataFromSite data = new DataFromSite();
 
@@ -59,7 +59,7 @@ public class ProveriIS {
 		
 		
 		
-		LinkedList<Subject> subjects = new LinkedList<>();
+		LinkedList<Katedra> subjects = new LinkedList<>();
 
 		for (int i = 0; i < list.size(); i++) {
 

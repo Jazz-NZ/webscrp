@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.jazz.demo.DataFromSite;
 import com.jazz.demo.NewNotification;
-import com.jazz.demo.Subject;
+import com.jazz.demo.Katedra;
 import com.jazz.demo.background.database.DatabaseConnection;
 import com.jazz.demo.dao.SubjectsRepo;
 import com.jazz.demo.fcm.PushNotificationService;
@@ -24,115 +24,107 @@ public class ProveriMath {
 	
 	 // @Autowired SubjectsRepo repo;
 	 
-
+	private LinkedList<String> listaSvihPredmeta;
+	private LinkedList<Katedra> listaPredmetaSaNovomVesti;
+	
+	
 	public ProveriMath() {
 
 	}
 
 	// vraca listu sa predmetima za koje je izaslo novo obavestenje
+	public LinkedList<Katedra> proveraMate() {
 
-	public LinkedList<Subject> proveraMate() {
+		listaSvihPredmeta = new LinkedList<String>();
 
-		DataFromSite data = new DataFromSite();
+		listaSvihPredmeta.add("matematika1");
+		listaSvihPredmeta.add("matematika2");
+		listaSvihPredmeta.add("matematika3");
+		listaSvihPredmeta.add("dms");
+		listaSvihPredmeta.add("numericka-analiza"); 
+		listaSvihPredmeta.add("elementi-teorije-algoritama");
+		listaSvihPredmeta.add("matematika-muzika");
+		listaSvihPredmeta.add("matematicka-logika");// ne mere preko vesti
+		listaSvihPredmeta.add("softverski-paketi");// ne mere preko vesti
+		listaSvihPredmeta.add("osnovi-kompjuterske-geometrije");// ne mere preko vesti
+		listaSvihPredmeta.add("matematicko-programiranje");// ne mere preko vesti
 
-		String mathUrl = "http://math.fon.bg.ac.rs/kursevi/";
-
-		LinkedList<String> list = new LinkedList<String>();
-
-		list.add("matematika1");
-		list.add("matematika2");
-		list.add("matematika3");
-		list.add("dms");
-		list.add("numericka-analiza");
-		list.add("elementi-teorije-algoritama");
-		list.add("matematika-muzika");
-		list.add("matematicka-logika");
-		list.add("softverski-paketi");
-		list.add("osnovi-kompjuterske-geometrije");
-		list.add("matematicko-programiranje");
-
+		try {
+			
+			citajIPisiUBazu();
 		
-		LinkedList<Subject> subjects = new LinkedList<>();
-
-
-			//citaj iz baze
-			//proveri da li je izasla nova vest,ako jeste update vest i poruku i onda dodaj u listu
-			
-			String predmetUBazi = null;
-			int vestUBazi = 0;
-			String porukaUBazi = null;
-			
-			String predmetProvera = null;
-			int vestNova = 0;
-			String porukaNova = null;
-			Subject subject = null;
-			
-			try {
-			
-				Statement statementQuerryRead = DatabaseConnection.getConnection().createStatement();
-				Statement statementQueryUpdate = DatabaseConnection.getConnection().createStatement();
-				System.out.println("Connection to database established..");
-				String queryRead = "select * from predmeti ";
-		        String queryUpdate = null;
-				ResultSet getPredmet = statementQuerryRead.executeQuery(queryRead);
-		        
-				//prolazim kroz tabelu 
-		        while(getPredmet.next()) {
-		        	
-		        	//podaci za predmet
-		        	predmetUBazi = getPredmet.getString("predmet");
-		        	vestUBazi = getPredmet.getInt("vest");
-		        	porukaUBazi = getPredmet.getString("poruka");
-		        	
-		        	System.out.println("predmet : " + predmetUBazi);
-	    			System.out.println("vest u bazi: " + vestUBazi);
-	    			System.out.println("poruka u bazi: " + porukaUBazi);
-		        	
-		        	for (int i = 0; i < list.size(); i++) {
-		        		
-		        		System.out.println("nesto");
-		        		
-		        		// zbog ovoga je vrv sporo zato sto svak put poziva JSoup i uzima url
-		        		//kako da na drugi nacin uzmem predmet,vest i poruku za svaki predmet?
-		        		// ne znam sta tacno radi getMathAll i da li sme toliko puta da se pozove
-		        		predmetProvera = data.getMathAllVesti(mathUrl + list.get(i), list.get(i)).getPredmet();
-		        		vestNova = data.getMathAllVesti(mathUrl + list.get(i), list.get(i)).getVest();
-		        		porukaNova = data.getMathAllVesti(mathUrl + list.get(i), list.get(i)).getPoruka();
-		        		subject = data.getMathAllVesti(mathUrl + list.get(i), list.get(i));
-		        		
-		        		if(predmetProvera.equals(predmetUBazi) && vestNova > vestUBazi) {
-		        			
-		        			//update table - nova vest je izasla
-		        			System.out.println("Nova vest izasla!");
-		        			queryUpdate = "update predmeti set vest = ' "+ vestNova +" ',poruka = '"+ porukaNova +"' where predmet = '"+ predmetUBazi +"'";
-		        			statementQueryUpdate.executeUpdate(queryUpdate);
-		        			
-		        			//novi atributi ubaceni u bazu
-		        			System.out.println("predmet : " + predmetProvera);
-			    			System.out.println("nova vest: " + vestNova);
-			    			System.out.println("poruka: " + porukaNova);
-		        			
-			    			//ubaci predmet u listu
-			        		subjects.add(subject);
-		        		}
-		        		
-		        	}
-		        	
-		        }
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-
-		return subjects;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Greska sa sql statementima pri citanju i pisanju u bazu!");
+		}
+		
+		return listaPredmetaSaNovomVesti;
 	}
 	
-	public Subject proveraAktivnosti() { 
+	private void citajIPisiUBazu() throws SQLException {
 		
 		DataFromSite data = new DataFromSite();
-		Subject subject = data.getMathAktivnosti();
+		String mathUrl = "http://math.fon.bg.ac.rs/kursevi/";
+		listaPredmetaSaNovomVesti = new LinkedList<>();
+		
+		String predmetUBazi = null;
+		String porukaUBazi = null;
+		String predmetNaSajtu = null;
+		String porukaNova = null;
+		Katedra subject = null;
+		
+		//otvaranje konekcija za bazu
+		Statement statementQuerryRead = DatabaseConnection.getConnection().createStatement();
+		Statement statementQueryUpdate = DatabaseConnection.getConnection().createStatement();
+		System.out.println("Connection to database established..");
+		String queryRead = "select * from predmeti ";
+        String queryUpdate = null;
+		ResultSet getPredmet = statementQuerryRead.executeQuery(queryRead);
+	        
+		//prolazim kroz tabelu 
+	   while(getPredmet.next()) {
+	        	
+	        //podaci za predmet iz baze
+		   predmetUBazi = getPredmet.getString("predmet");
+		   porukaUBazi = getPredmet.getString("poruka");
+	        	
+		   System.out.println("predmet : " + predmetUBazi);
+		   System.out.println("poruka u bazi: " + porukaUBazi);
+	        	
+    		//prolazak kroz listu svih predmeta 
+		   for (int i = 0; i < listaSvihPredmeta.size(); i++) {
+	        		
+			   System.out.println("nesto");
+	        		
+			   //novi podaci sa sajta
+			   subject = data.getMathAllVesti(mathUrl + listaSvihPredmeta.get(i), listaSvihPredmeta.get(i));
+			   predmetNaSajtu =  subject.getPredmet();
+			   porukaNova = subject.getPoruka();
+	        		
+			   //ukoliko si nasao predmet u bazi i poruka se promenila 
+			   //update bazu i dodaj u listu predmeta sa novom vesti 
+			   if(predmetNaSajtu.equals(predmetUBazi) && porukaNova != null && !porukaNova.equals(porukaUBazi)) {
+	        			
+				   System.out.println("Nova vest izasla!");
+				   queryUpdate = "update predmeti set poruka = '"+ porukaNova +"' where predmet = '"+ predmetUBazi +"'";
+				   statementQueryUpdate.executeUpdate(queryUpdate);
+	        			
+	        		//novi atributi ubaceni u bazu
+				   System.out.println("predmet : " + predmetNaSajtu);
+				   System.out.println("poruka: " + porukaNova);
+	        			
+				   //ubaci predmet u listu predmeta sa novom vesti
+				   listaPredmetaSaNovomVesti.add(subject);
+				   break;
+			   }
+		   }
+	   }
+	}
+
+	public Katedra proveraAktivnosti() { 
+		
+		DataFromSite data = new DataFromSite();
+		Katedra subject = data.getMathAktivnosti();
 		
 		//logika za bazu npr vrati neku defoltnu poruku i kad je vrati u AppSheduler se proveri poruka i ne posalje se obavestenje
 		

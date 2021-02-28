@@ -41,7 +41,7 @@ public class HomeController {
 	public String home() {
 		
 		DataFromSite data = new DataFromSite();
-		Subject  neki =	data.getMath("http://math.fon.bg.ac.rs/vesti");
+		Katedra  neki =	data.getMath("http://math.fon.bg.ac.rs/vesti");
 			
 		int id = 560;
 		
@@ -49,7 +49,7 @@ public class HomeController {
 		 
 		
 		//101 mata
-		Subject mata = repo.findById(101).orElse(new Subject());
+		Katedra mata = repo.findById(101).orElse(new Katedra());
 		
 		System.out.println("Vest pre update " + mata.getVest());
 		
@@ -77,10 +77,10 @@ public class HomeController {
 		//preuzima podatke sa sajta
 		DataFromSite data = new DataFromSite();
 		//getMath vraca  objekat tipa Subject
-		Subject  neki =	data.getMath("http://math.fon.bg.ac.rs/vesti");
+		Katedra  neki =	data.getMath("http://math.fon.bg.ac.rs/vesti");
 		
 		ModelAndView mv = new ModelAndView("show.jsp");
-		Subject mata = repo.findById(101).orElse(new Subject());
+		Katedra mata = repo.findById(101).orElse(new Katedra());
 		
 		String nesto;
 		
@@ -117,7 +117,7 @@ public class HomeController {
 			repo.save(mata);
 			
 		}
-		Subject mata1 = new Subject();
+		Katedra mata1 = new Katedra();
 		mata1.setPoruka("Nikola");
 		mata1.setId(102);
 		mata1.setVest(44);
@@ -172,7 +172,7 @@ public class HomeController {
 		
 		
 		LinkedList<String> list = mathfon.returnList();
-		LinkedList<Subject> subjects = new LinkedList<>();
+		LinkedList<Katedra> subjects = new LinkedList<>();
 		
 		
 		
