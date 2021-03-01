@@ -51,17 +51,17 @@ public class HomeController {
 		//101 mata
 		Katedra mata = repo.findById(101).orElse(new Katedra());
 		
-		System.out.println("Vest pre update " + mata.getVest());
 		
 		
 		
-		if(id>mata.getVest()) {
-			
-			mata.setVest(id);
-			repo.save(mata);
-		}
 		
-		System.out.println("Vest posle update "+mata.getVest());
+		/*
+		 * if(id>mata.getVest()) {
+		 * 
+		 * mata.setVest(id); repo.save(mata); }
+		 * 
+		 * System.out.println("Vest posle update "+mata.getVest());
+		 */
 		
 		
 
@@ -71,72 +71,61 @@ public class HomeController {
 		return "home.jsp";
 	}
 
-	@RequestMapping("/show")
-	public ModelAndView show(){
-		
-		//preuzima podatke sa sajta
-		DataFromSite data = new DataFromSite();
-		//getMath vraca  objekat tipa Subject
-		Katedra  neki =	data.getMath("http://math.fon.bg.ac.rs/vesti");
-		
-		ModelAndView mv = new ModelAndView("show.jsp");
-		Katedra mata = repo.findById(101).orElse(new Katedra());
-		
-		String nesto;
-		
-		
-		NewNotification newNot = new NewNotification();
-		
-		int id = 560;
-		 
-		
-		//101 mata
-		//Subject mata = repo.findById(101).orElse(new Subject());
-		
-		System.out.println("Vest pre update " + mata.getVest());
-		
-		if(neki.getVest()>mata.getVest()) {
-			
-			mata.setVest(neki.getVest());
-			mata.setPoruka(neki.getPoruka());
-			
-			newNot.setPoruka(mata.getPoruka());
-			newNot.setPredmet("Matematika");
-			
-			//salje obavestenje samo kada je izasno novo
-			
-			 try {
-					pushNotificaitonService.sendTopic(newNot,"Matematika1");
-					
-					
-				} catch (FirebaseMessagingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-			repo.save(mata);
-			
-		}
-		Katedra mata1 = new Katedra();
-		mata1.setPoruka("Nikola");
-		mata1.setId(102);
-		mata1.setVest(44);
-		//repo.save(mata1);
-		
-		
-		
-		
-		 nesto = mata.getPoruka();
-		 
-		 
-		 
-		 System.out.println("Vest posle update: "+mata.getVest());
-		 mv.addObject(nesto);
-		
-		return mv;
-		
-	}
-	
+	/*
+	 * @RequestMapping("/show") public ModelAndView show(){
+	 * 
+	 * //preuzima podatke sa sajta DataFromSite data = new DataFromSite(); //getMath
+	 * vraca objekat tipa Subject Katedra neki =
+	 * data.getMath("http://math.fon.bg.ac.rs/vesti");
+	 * 
+	 * ModelAndView mv = new ModelAndView("show.jsp"); Katedra mata =
+	 * repo.findById(101).orElse(new Katedra());
+	 * 
+	 * String nesto;
+	 * 
+	 * 
+	 * NewNotification newNot = new NewNotification();
+	 * 
+	 * int id = 560;
+	 * 
+	 * 
+	 * //101 mata //Subject mata = repo.findById(101).orElse(new Subject());
+	 * 
+	 * System.out.println("Vest pre update " + mata.getVest());
+	 * 
+	 * if(neki.getVest()>mata.getVest()) {
+	 * 
+	 * mata.setVest(neki.getVest()); mata.setPoruka(neki.getPoruka());
+	 * 
+	 * newNot.setPoruka(mata.getPoruka()); newNot.setPredmet("Matematika");
+	 * 
+	 * //salje obavestenje samo kada je izasno novo
+	 * 
+	 * try { pushNotificaitonService.sendTopic(newNot,"Matematika1");
+	 * 
+	 * 
+	 * } catch (FirebaseMessagingException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); }
+	 * 
+	 * repo.save(mata);
+	 * 
+	 * } Katedra mata1 = new Katedra(); mata1.setPoruka("Nikola");
+	 * //repo.save(mata1);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * nesto = mata.getPoruka();
+	 * 
+	 * 
+	 * 
+	 * System.out.println("Vest posle update: "+mata.getVest());
+	 * mv.addObject(nesto);
+	 * 
+	 * return mv;
+	 * 
+	 * }
+	 */
 	
 	// u test.jsp se nalazi samo prikaz padajuceg menija koji treba da se prikaze
 	@RequestMapping("/test")

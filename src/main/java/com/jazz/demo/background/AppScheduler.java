@@ -31,9 +31,9 @@ public class AppScheduler {
 	}
 
 	// Executes each 500 ms
-	@Scheduled(fixedRate = 20000)
+	@Scheduled(fixedRate = 60000)
 	public void checkRecords() {
-		System.err.println("Proslo 20s");
+		System.err.println("Proslo 60s");
 
 		int i = 0;
 

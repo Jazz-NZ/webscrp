@@ -61,7 +61,7 @@ public class ProveriMath {
 		return listaPredmetaSaNovomVesti;
 	}
 	
-	private void citajIPisiUBazu() throws SQLException {
+	public void citajIPisiUBazu() throws SQLException {
 		
 		DataFromSite data = new DataFromSite();
 		String mathUrl = "http://math.fon.bg.ac.rs/kursevi/";
@@ -92,12 +92,12 @@ public class ProveriMath {
 		   System.out.println("poruka u bazi: " + porukaUBazi);
 	        	
     		//prolazak kroz listu svih predmeta 
-		   for (int i = 0; i < listaSvihPredmeta.size(); i++) {
+		  
 	        		
-			   System.out.println("nesto");
+			   //System.out.println("nesto");
 	        		
 			   //novi podaci sa sajta
-			   subject = data.getMathAllVesti(mathUrl + listaSvihPredmeta.get(i), listaSvihPredmeta.get(i));
+			   subject = data.getMathAllVesti(mathUrl + predmetUBazi, predmetUBazi); //samo je korisceno predmetUBazi i tako se ne proazi kroz listu
 			   predmetNaSajtu =  subject.getPredmet();
 			   porukaNova = subject.getPoruka();
 	        		
@@ -115,9 +115,9 @@ public class ProveriMath {
 	        			
 				   //ubaci predmet u listu predmeta sa novom vesti
 				   listaPredmetaSaNovomVesti.add(subject);
-				   break;
+				   
 			   }
-		   }
+		   
 	   }
 	}
 

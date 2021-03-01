@@ -7,11 +7,12 @@ import javax.persistence.Id;
 public class Katedra {   //da klasa subject bude katedra
 	
 	@Id
-	private int id; // obrisati id i vest
-	
-	private int vest;
-	private String poruka;
 	private String topic;
+
+	private String link;
+	
+	private String poruka;
+	
 	
 	
 	
@@ -21,17 +22,12 @@ public class Katedra {   //da klasa subject bude katedra
 	public void setPredmet(String predmet) {
 		this.topic = predmet;
 	}
-	public int getId() {
-		return id;
+	
+	public String getLink() {
+		return link;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getVest() {
-		return vest;
-	}
-	public void setVest(int vest) {
-		this.vest = vest;
+	public void setLink(String link) {
+		this.link = link;
 	}
 	
 	public String getPoruka() {

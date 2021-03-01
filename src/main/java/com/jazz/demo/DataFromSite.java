@@ -76,8 +76,6 @@ public class DataFromSite {
 		}
 		
 		Katedra sub = new Katedra();
-		sub.setId(101);
-		sub.setVest(id);
 		sub.setPoruka(news);
 		
 		return sub;
@@ -87,6 +85,7 @@ public Katedra getMathAllVesti(String url, String predmet)  {
 		
 	int id = -1;
 	String news = null;
+	String link = null;
 	
 	try {
 		Document doc = Jsoup.connect(url).get();
@@ -102,12 +101,12 @@ public Katedra getMathAllVesti(String url, String predmet)  {
        // System.out.println(elements.select("li.recent-news-wrap").get(0));
         
         
-        String idStr  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
+        link  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
         
        // System.out.println(idStr);
         
         //id pravi problem, treba pretresti web scrape
-        id = Integer.parseInt(idStr.substring(7));
+        
         
         news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
         System.out.println(news);
@@ -120,10 +119,10 @@ public Katedra getMathAllVesti(String url, String predmet)  {
 		//pogledaj ovo set id i vest
 		
 		Katedra sub = new Katedra();
-		sub.setId(101);
-		sub.setVest(id);
+		
 		sub.setPoruka(news);
 		sub.setPredmet(predmet);
+		sub.setLink(link);
 		
 		return sub;
 	}
@@ -135,6 +134,7 @@ public Katedra getMathAktivnosti() {
 	
 	int id = -1;
 	String news = null;
+	String link = null;
 	
 	try {
 		Document doc = Jsoup.connect(url).get();
@@ -153,9 +153,9 @@ public Katedra getMathAktivnosti() {
         
         
         
-        String idStr  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
+        link  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
         
-        System.out.println(idStr);
+        //System.out.println(idStr);
         
         //id pravi problem, treba pretresti web scrape
         //id = Integer.parseInt(idStr.substring(7));
@@ -169,8 +169,7 @@ public Katedra getMathAktivnosti() {
 	}
 
 	Katedra sub = new Katedra();
-	sub.setId(101);
-	sub.setVest(id);
+	
 	sub.setPoruka(news);
 	sub.setPredmet("Matematika");
 		
@@ -185,6 +184,7 @@ public Katedra getMathAktivnosti() {
 		
 		int id = -1;
 		String news = null;
+		String link = null;
 		
 		try {
 			Document doc = Jsoup.connect(url).get();
@@ -199,7 +199,7 @@ public Katedra getMathAktivnosti() {
             
             //System.out.println(elements.select("li").get(0));
             
-            String idStr  = elements.select("li").get(0).select("a").first().attr("href");
+            link  = elements.select("li").get(0).select("a").first().attr("href");
             
             //System.out.println(idStr);
             
@@ -217,10 +217,11 @@ public Katedra getMathAktivnosti() {
 		}
 
 	Katedra sub = new Katedra();	
-	sub.setId(101);
+	
 	sub.setPoruka(news);
 	sub.setPredmet(predmet);
-	sub.setVest(1);
+	sub.setLink(link);
+	
 	
 	return sub;
 	
@@ -230,6 +231,7 @@ public Katedra getMathAktivnosti() {
 		
 		int id = -1;
 		String news = null;
+		String link = null;
 		
 		try {
 			Document doc = Jsoup.connect(url).get();
@@ -248,7 +250,7 @@ public Katedra getMathAktivnosti() {
             
             
             
-            String idStr  = elements.select("div.blog-item-wrap").get(0).select("a").first().attr("href");
+            link  = elements.select("div.blog-item-wrap").get(0).select("a").first().attr("href");
             
            // System.out.println(idStr);
             
@@ -266,8 +268,7 @@ public Katedra getMathAktivnosti() {
 		}
 
 		Katedra sub = new Katedra();
-		sub.setId(101);
-		sub.setVest(id);
+		sub.setLink(link);
 		sub.setPoruka(news);
 		sub.setPredmet(predmet);
 		
