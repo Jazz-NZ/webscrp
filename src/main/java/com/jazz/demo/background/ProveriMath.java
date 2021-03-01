@@ -24,7 +24,7 @@ public class ProveriMath {
 	
 	 // @Autowired SubjectsRepo repo;
 	 
-	private LinkedList<String> listaSvihPredmeta;
+//	private LinkedList<String> listaSvihPredmeta;
 	private LinkedList<Katedra> listaPredmetaSaNovomVesti;
 	
 	
@@ -35,19 +35,19 @@ public class ProveriMath {
 	// vraca listu sa predmetima za koje je izaslo novo obavestenje
 	public LinkedList<Katedra> proveraMate() {
 
-		listaSvihPredmeta = new LinkedList<String>();
-
-		listaSvihPredmeta.add("matematika1");
-		listaSvihPredmeta.add("matematika2");
-		listaSvihPredmeta.add("matematika3");
-		listaSvihPredmeta.add("dms");
-		listaSvihPredmeta.add("numericka-analiza"); 
-		listaSvihPredmeta.add("elementi-teorije-algoritama");
-		listaSvihPredmeta.add("matematika-muzika");
-		listaSvihPredmeta.add("matematicka-logika");// ne mere preko vesti
-		listaSvihPredmeta.add("softverski-paketi");// ne mere preko vesti
-		listaSvihPredmeta.add("osnovi-kompjuterske-geometrije");// ne mere preko vesti
-		listaSvihPredmeta.add("matematicko-programiranje");// ne mere preko vesti
+//		listaSvihPredmeta = new LinkedList<String>();
+//
+//		listaSvihPredmeta.add("matematika1");
+//		listaSvihPredmeta.add("matematika2");
+//		listaSvihPredmeta.add("matematika3");
+//		listaSvihPredmeta.add("dms");
+//		listaSvihPredmeta.add("numericka-analiza"); 
+//		listaSvihPredmeta.add("elementi-teorije-algoritama");
+//		listaSvihPredmeta.add("matematika-muzika");
+//		listaSvihPredmeta.add("matematicka-logika");// ne mere preko vesti
+//		listaSvihPredmeta.add("softverski-paketi");// ne mere preko vesti
+//		listaSvihPredmeta.add("osnovi-kompjuterske-geometrije");// ne mere preko vesti
+//		listaSvihPredmeta.add("matematicko-programiranje");// ne mere preko vesti
 
 		try {
 			
@@ -91,30 +91,25 @@ public class ProveriMath {
 		   System.out.println("predmet : " + predmetUBazi);
 		   System.out.println("poruka u bazi: " + porukaUBazi);
 	        	
-    		//prolazak kroz listu svih predmeta 
-		  
-	        		
-			   //System.out.println("nesto");
-	        		
 			   //novi podaci sa sajta
-			   subject = data.getMathAllVesti(mathUrl + predmetUBazi, predmetUBazi); //samo je korisceno predmetUBazi i tako se ne proazi kroz listu
-			   predmetNaSajtu =  subject.getPredmet();
-			   porukaNova = subject.getPoruka();
+		   subject = data.getMathAllVesti(mathUrl + predmetUBazi, predmetUBazi); //samo je korisceno predmetUBazi i tako se ne proazi kroz listu
+		   predmetNaSajtu =  subject.getPredmet();
+		   porukaNova = subject.getPoruka();
 	        		
 			   //ukoliko si nasao predmet u bazi i poruka se promenila 
 			   //update bazu i dodaj u listu predmeta sa novom vesti 
-			   if(predmetNaSajtu.equals(predmetUBazi) && porukaNova != null && !porukaNova.equals(porukaUBazi)) {
+		   if(predmetNaSajtu.equals(predmetUBazi) && porukaNova != null && !porukaNova.equals(porukaUBazi)) {
 	        			
-				   System.out.println("Nova vest izasla!");
-				   queryUpdate = "update predmeti set poruka = '"+ porukaNova +"' where predmet = '"+ predmetUBazi +"'";
-				   statementQueryUpdate.executeUpdate(queryUpdate);
+			  System.out.println("Nova vest izasla!");
+			  queryUpdate = "update predmeti set poruka = '"+ porukaNova +"' where predmet = '"+ predmetUBazi +"'";
+			  statementQueryUpdate.executeUpdate(queryUpdate);
 	        			
 	        		//novi atributi ubaceni u bazu
-				   System.out.println("predmet : " + predmetNaSajtu);
-				   System.out.println("poruka: " + porukaNova);
+			  System.out.println("predmet : " + predmetNaSajtu);
+			  System.out.println("poruka: " + porukaNova);
 	        			
 				   //ubaci predmet u listu predmeta sa novom vesti
-				   listaPredmetaSaNovomVesti.add(subject);
+			  listaPredmetaSaNovomVesti.add(subject);
 				   
 			   }
 		   

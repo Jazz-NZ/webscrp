@@ -37,13 +37,23 @@ public class AppScheduler {
 
 		int i = 0;
 
-		ProveriMath proveraMate = new ProveriMath();
-		LinkedList<Katedra> predmetiSaNovomVesti = proveraMate.proveraMate();
+		//parametri za proveru za katedru iz mate
+//		String urlKatedre = "http://math.fon.bg.ac.rs/kursevi/";
+//		String imeTabeleUBazi = "predmetimath";
+		
+		//parametri za proveru za kateru mmklab - napravi novu tabelu sa nazivom predmetimmklab i ubaci sve predmete kao i za matu i radice ti
+		String urlKatedre = "http://www.mmklab.fon.bg.ac.rs/nastava/osnovne-studije/";
+		String imeTabeleUBazi = "predmetimmklab";
+//		
+		//radi ali pogledaj metodu proveraKatedte
+		ProveriKatedru katedra = new ProveriKatedru(urlKatedre, imeTabeleUBazi);
+		LinkedList<Katedra> predmetiSaNovomVesti = katedra.proveraKatedre();
 		
 		System.out.println("Predmet za koje je izasla nova vest:");
 		for (Katedra subject : predmetiSaNovomVesti) {
 			System.out.println(subject.getPredmet());
 		}
+		
 		
 //		  NewNotification newNot = new NewNotification();
 //		  newNot.setPoruka(proveri.proveraMate().get(i).getPoruka());
