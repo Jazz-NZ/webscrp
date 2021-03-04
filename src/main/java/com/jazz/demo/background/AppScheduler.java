@@ -35,14 +35,29 @@ public class AppScheduler {
 	public void checkRecords() {
 		System.err.println("Proslo 60s");
 
-		int i = 0;
+		
 
 		ProveriMath proveraMate = new ProveriMath();
 		LinkedList<Katedra> predmetiSaNovomVesti = proveraMate.proveraMate();
 		
 		System.out.println("Predmet za koje je izasla nova vest:");
 		for (Katedra subject : predmetiSaNovomVesti) {
-			System.out.println(subject.getPredmet());
+			
+			 NewNotification newNot = new NewNotification();
+			 newNot.setPoruka(subject.getPoruka());
+			 newNot.setPredmet(subject.getPredmet());
+			 
+			 try { pushNotificaitonService.sendTopic(newNot,subject.getPredmet());
+			  } catch
+			  (FirebaseMessagingException e) { // TODO Auto-generated catch block
+			  e.printStackTrace(); }
+			  
+			 
+			 System.out.println(subject.getPredmet());
+			   }
+			 
+			
+			
 		}
 		
 //		  NewNotification newNot = new NewNotification();
@@ -76,22 +91,7 @@ public class AppScheduler {
 
 		// dokle god lista nije prazna salje se obavestenje jer se u listi nalaze
 		// predmeti za koje je izasla nova vest
-		/*
-		 * while(proveri.proveraMate().get(i)!=null) {
-		 * 
-		 * //NewNotification newNot = new NewNotification();
-		 * newNot.setPoruka(proveri.proveraMate().get(i).getPoruka());
-		 * newNot.setPredmet("Matematika 1");
-		 * 
-		 * 
-		 * 
-		 * try { pushNotificaitonService.sendTopic(newNot); } catch
-		 * (FirebaseMessagingException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 * 
-		 * i++; }
-		 */
+		
+		}
+	
 
-	}
-
-}
