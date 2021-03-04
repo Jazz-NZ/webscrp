@@ -66,9 +66,12 @@ public class ProveriKatedru {
 		
 		String predmetUBazi = null;
 		String porukaUBazi = null;
+		String linkPorukeUBazi = null;
+		
 		String predmetNaSajtu = null;
-		String porukaNova = null;
-		Katedra subject = null;
+		String porukaSajt = null;
+		String linkPorukeSajt = null;
+		Katedra katedra = null;
 		
 		//otvaranje konekcija za bazu
 		Statement statementQuerryRead = DatabaseConnection.getConnection().createStatement();
@@ -84,37 +87,38 @@ public class ProveriKatedru {
 	        //podaci za predmet iz baze
 		   predmetUBazi = getPredmet.getString("predmet");
 		   porukaUBazi = getPredmet.getString("poruka");
-	        	
+	       linkPorukeUBazi = getPredmet.getString("linkPoruke"); 	
+		   
 		   System.out.println("predmet : " + predmetUBazi);
 		   System.out.println("poruka u bazi: " + porukaUBazi);
-	        	
-			   //novi podaci sa sajta
-		   
-		   //OVDE JE SAMO ZAJEB STO MORA DA SE PITA OVAKO zbog metoda nad objektom data
-		   // i onda u sustini nisto nismo uradili :D ,kako resiti ovo da moze da radi ovako ?
+	       System.out.println("link poruke u bazi: " + linkPorukeUBazi);
+
 		   if(imeTabeleUBazi.equals("predmetimmklab")) 
-			   subject = data.getMmklab(urlKatedre + predmetUBazi, predmetUBazi); 
+			   katedra = data.getMmklab(urlKatedre + predmetUBazi, predmetUBazi); 
 		   
 		   else if(imeTabeleUBazi.equals("predmetimath"))
-			   subject = data.getMathAllVesti(urlKatedre + predmetUBazi, predmetUBazi); 
+			   katedra = data.getMathAllVesti(urlKatedre + predmetUBazi, predmetUBazi); 
 
+		   else if(imeTabeleUBazi.equals("predmetimathdodatni"))
+			   katedra = data.getMathAktivnosti(predmetUBazi);
 		   
-		   predmetNaSajtu =  subject.getPredmet();
-		   porukaNova = subject.getPoruka();
+		   predmetNaSajtu =  katedra.getPredmet();
+		   porukaSajt = katedra.getPoruka();
+		   linkPorukeSajt = katedra.getLink();
 	        		
 			   //ukoliko si nasao predmet u bazi i poruka se promenila 
-		   if(predmetNaSajtu.equals(predmetUBazi) && porukaNova != null && !porukaNova.equals(porukaUBazi)) {
+		   if(predmetNaSajtu.equals(predmetUBazi) && porukaSajt != null && !porukaSajt.equals(porukaUBazi)) {
 	        			
 			  System.out.println("Nova vest izasla!");
-			  queryUpdate = "update "+ imeTabeleUBazi +" set poruka = '"+ porukaNova +"' where predmet = '"+ predmetUBazi +"'";
+			  queryUpdate = "update "+ imeTabeleUBazi +" set poruka = '"+ porukaSajt +"',linkPoruke = '"+ linkPorukeSajt +"' where predmet = '"+ predmetUBazi +"'";
 			  statementQueryUpdate.executeUpdate(queryUpdate);
 	        			
 	        		//novi atributi ubaceni u bazu
 			  System.out.println("predmet : " + predmetNaSajtu);
-			  System.out.println("poruka: " + porukaNova);
-	        			
+			  System.out.println("poruka: " + porukaSajt);
+			  System.out.println("link poruke: " + linkPorukeSajt);		
 				   //ubaci predmet u listu predmeta sa novom vesti
-			  listaPredmetaSaNovomVesti.add(subject);
+			  listaPredmetaSaNovomVesti.add(katedra);
 				   
 		   }
 	   }

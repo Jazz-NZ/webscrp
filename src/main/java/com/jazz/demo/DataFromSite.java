@@ -128,7 +128,7 @@ public Katedra getMathAllVesti(String url, String predmet)  {
 	}
 		
 	
-public Katedra getMathAktivnosti() {
+public Katedra getMathAktivnosti(String predmet) {
 	
 	String url= "http://math.fon.bg.ac.rs/";
 	
@@ -146,11 +146,7 @@ public Katedra getMathAktivnosti() {
         
         Elements elements = doc.select("ul.list-unstyled");
 		
-        
        // System.out.println(elements.select("li.recent-news-wrap").get(0));
-        
-        
-        
         
         
         link  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
@@ -170,8 +166,9 @@ public Katedra getMathAktivnosti() {
 
 	Katedra sub = new Katedra();
 	
+	sub.setPredmet(predmet);
 	sub.setPoruka(news);
-	sub.setPredmet("Matematika");
+	sub.setLink(link);
 		
 	
 	return sub;
