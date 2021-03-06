@@ -38,12 +38,12 @@ public class AppScheduler {
 		
 
 		//parametri za proveru za katedru iz mate
-//		String urlKatedre = "http://math.fon.bg.ac.rs/kursevi/";
-//		String imeTabeleUBazi = "predmetimath";
+		String urlKatedre = "http://math.fon.bg.ac.rs/kursevi/";
+		String imeTabeleUBazi = "predmetimath";
 		
 		//parametri za proveru za kateru mmklab - napravi novu tabelu sa nazivom predmetimmklab i ubaci sve predmete kao i za matu i radice ti
-		String urlKatedre = "http://www.mmklab.fon.bg.ac.rs/nastava/osnovne-studije/";
-		String imeTabeleUBazi = "predmetimmklab";
+		//String urlKatedre = "http://www.mmklab.fon.bg.ac.rs/nastava/osnovne-studije/";
+		//String imeTabeleUBazi = "predmetimmklab";
 //		
 		//radi ali pogledaj metodu proveraKatedte
 		ProveriKatedru katedra = new ProveriKatedru(urlKatedre, imeTabeleUBazi);
@@ -55,6 +55,7 @@ public class AppScheduler {
 			 NewNotification newNot = new NewNotification();
 			 newNot.setPoruka(subject.getPoruka());
 			 newNot.setPredmet(subject.getPredmet());
+			 System.out.println(subject.getPredmet());
 			 
 			 try { pushNotificaitonService.sendTopic(newNot,subject.getPredmet());
 			  } catch
@@ -62,7 +63,7 @@ public class AppScheduler {
 			  e.printStackTrace(); }
 			  
 			 
-			 System.out.println(subject.getPredmet());
+			 
 			   }
 			 
 			
