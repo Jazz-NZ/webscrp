@@ -1,5 +1,7 @@
 package com.jazz.demo;
 
+import java.io.IOException;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -273,6 +275,30 @@ public Katedra getMathAktivnosti(String predmet) {
 		
 	}
 	
+//	 vracamo url poslednje vesti sa fonovog sajta
+	public String getFonPoslednjuVest() {
+		
+		String url = "http://www.fon.bg.ac.rs/obavestenja/vesti-osnovne-studije/";
+		String urlPoslednjeVesti = null;
+		
+		try {
+			
+			Document document =  Jsoup.connect(url).get();
+			
+			Elements elements = document.select("span.posted-on");
+			
+			urlPoslednjeVesti = elements.get(0).select("a").attr("href");
+//			System.out.println(urlPoslednjeVesti);
+			
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return urlPoslednjeVesti;
+	
+	}
 	
 	public Katedra getLabsys(String url, String predmet) {
 		String news = null;
