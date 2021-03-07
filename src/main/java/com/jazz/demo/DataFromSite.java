@@ -692,6 +692,187 @@ public Katedra getMathAktivnosti(String predmet) {
 		
 		return sub;
 	}
+	
+	public Katedra getFinansije(String url, String predmet) {
+		
+			//String url= "http://finansije.fon.bg.ac.rs/osnovne-studije/finansijski-menadzment/Vesti.html";
+		
+		int id = -1;
+		String news = null;
+		String link = null;
+		
+		try {
+			Document doc = Jsoup.connect(url).get();
+			
+			//System.out.println(doc);
+			
+			//String title = doc.title();
+            //System.out.println("title : " + title);
+            
+            Elements elements = doc.select("div.dataNav.storyNav.fix");
+			//System.out.println(elements);
+            
+            //System.out.println(elements.select("h2.title").get(0));
+            
+            
+            
+            
+            
+            link  = elements.select("h2.title").get(0).select("a").first().attr("href");
+            
+            System.out.println(link);
+            
+            //id pravi problem, treba pretresti web scrape
+            //id = Integer.parseInt(idStr.substring(7));
+            
+            news = elements.select("h2.title").get(0).select("a").text();
+            System.out.println(news);
+           // news = news.replace("Permalink to ", "");
+           // System.out.println(news);
+             
+			
+		}catch (Exception e) {
+			System.err.println("Error with connecting to url or getting data from url");
+		}
+		Katedra sub = new Katedra();
+		sub.setLink(link);
+		sub.setPoruka(news);
+		sub.setPredmet(predmet);
+		
+		return sub;
+	}
+	
+	public Katedra getEng(String url, String predmet) {
+		
+		String news = null;
+		String link = null;
+		//String url = "http://eng.fon.bg.ac.rs/?cat=4";
+		
+		try {
+			Document doc = Jsoup.connect(url).get();
+			
+			//System.out.println(doc);
+			
+			//String title = doc.title();
+	        //System.out.println("title : " + title);
+	        
+	        Elements elements = doc.select("h1.entry-title");				        
+	        System.out.println(elements.select("h1.entry-title").get(0));
+	        
+	        
+	        link  = elements.select("h1.entry-title").get(0).select("a").first().attr("href");	        
+	        System.out.println(link);
+	        
+	        //id pravi problem, treba pretresti web scrape
+	        
+	        
+	        news = elements.select("h1.entry-title").get(0).text();
+	        System.out.println(news);
+	        String s = news.replace(" ", "");
+	        if (s.charAt(3) == '2')
+	        	System.out.println(news);
+	}catch(Exception e){
+		System.err.println("Greska: preuzimanje sa sajta!");
+		}
+		
+		Katedra sub = new Katedra();
+		sub.setLink(link);
+		sub.setPoruka(news);
+		sub.setPredmet(predmet);
+		
+		return sub;
+	}
+	
+	public Katedra getEkonomija(String url, String predmet) {
+
+		String news = null;
+		String link = null;
+		//String url = "http://ekonomija.fon.bg.ac.rs/novosti/";
+		
+		try {
+			Document doc = Jsoup.connect(url).get();
+			
+			//System.out.println(doc);
+			
+			//String title = doc.title();
+	        //System.out.println("title : " + title);
+	        
+	        Elements elements = doc.select("h2.entry-title");
+			
+	        
+	        System.out.println(elements.select("h2.entry-title").get(0));
+	        
+	        
+	        link  = elements.select("h2.entry-title").get(0).select("a").first().attr("href");
+	        
+	        System.out.println(link);
+	        
+	        //id pravi problem, treba pretresti web scrape
+	        
+	        
+	        news = elements.select("h4").get(0).text();
+	        System.out.println(news);
+	}catch(Exception e){
+		System.err.println("Greska: preuzimanje sa sajta!");
+		}
+		
+		Katedra sub = new Katedra();
+		sub.setLink(link);
+		sub.setPoruka(news);
+		sub.setPredmet(predmet);
+		
+		return sub;
+	}
+	
+	
+		public Katedra getCtm(String url, String predmet) {
+			
+			//String url= "http://ctm.fon.bg.ac.rs/menadzment-tehnologije-i-razvoja/";
+		
+		int id = -1;
+		String news = null;
+		String link = null;
+		
+		try {
+			Document doc = Jsoup.connect(url).get();
+			
+			//System.out.println(doc);
+			
+			//String title = doc.title();
+            //System.out.println("title : " + title);
+            
+            Elements elements = doc.select("div.post-content");
+			//System.out.println(elements);
+            
+            System.out.println(elements.select("h2.post-title.entry-title").get(0));
+            
+            
+            
+            
+            
+            link  = elements.select("h2.post-title.entry-title").get(0).select("a").first().attr("href");
+            
+            System.out.println(link);
+            
+            //id pravi problem, treba pretresti web scrape
+            //id = Integer.parseInt(idStr.substring(7));
+            
+            news = elements.select("h2.post-title.entry-title").get(0).select("a").text();
+            System.out.println(news);
+           // news = news.replace("Permalink to ", "");
+           // System.out.println(news);
+             
+			
+		}catch (Exception e) {
+			System.err.println("Error with connecting to url or getting data from url");
+		}
+		Katedra sub = new Katedra();
+		sub.setLink(link);
+		sub.setPoruka(news);
+		sub.setPredmet(predmet);
+		
+		return sub;
+	}
 }
 
 
