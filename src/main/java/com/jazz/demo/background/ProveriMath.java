@@ -116,15 +116,6 @@ public class ProveriMath {
 	   }
 	}
 
-	public Katedra proveraAktivnosti() { 
-		
-		DataFromSite data = new DataFromSite();
-		Katedra subject = data.getMathAktivnosti();
-		
-		//logika za bazu npr vrati neku defoltnu poruku i kad je vrati u AppSheduler se proveri poruka i ne posalje se obavestenje
-		
-		System.out.println("Sta ti ispisujes? " + subject.getPredmet());
-		return subject;
-	}
+	
 
 }
