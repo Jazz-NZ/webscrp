@@ -36,11 +36,15 @@ public class AppScheduler {
 		System.err.println("Proslo 60s");
 
 		
-
-		String urlKatedre = "http://math.fon.bg.ac.rs/kursevi/";
-		String imeTabeleUBazi = "predmetimath";
+		//parametri za proveru za katedru iz mate
+//		String urlKatedre = "http://math.fon.bg.ac.rs/kursevi/";
+//		String imeTabeleUBazi = "predmetimath";
 		
-		//mmklab 
+		//parametri za dodatne predmete iz mate
+		//String urlKatedre = "http://math.fon.bg.ac.rs/";
+		//String imeTabeleUBazi = "predmetimathdodatni";
+		
+		//parametri za proveru za kateru mmklab 
 //		String urlKatedre = "http://www.mmklab.fon.bg.ac.rs/nastava/osnovne-studije/";
 //		String imeTabeleUBazi = "predmetimmklab";
 
@@ -61,8 +65,8 @@ public class AppScheduler {
 //		String imeTabeleUBazi = "predmetisilab";
 		
 		//ai
-//		String urlKatedre = "http://ai.fon.bg.ac.rs/osnovne/";
-//		String imeTabeleUBazi = "predmetiai";
+		String urlKatedre = "http://ai.fon.bg.ac.rs/osnovne/";
+		String imeTabeleUBazi = "predmetiai";
 
 		ProveriKatedru provera = new ProveriKatedru(urlKatedre, imeTabeleUBazi);
 		LinkedList<Katedra> predmetiSaNovomVesti = provera.proveraKatedre();
@@ -74,8 +78,10 @@ public class AppScheduler {
 			 NewNotification newNot = new NewNotification();
 			 newNot.setPoruka(subject.getPoruka());
 			 newNot.setPredmet(subject.getPredmet());
+			 newNot.setLink(subject.getLink());
 
-			 System.out.println(subject.getPredmet());
+			 System.out.println(subject.getLink());
+			 
 			 
 			 try { pushNotificaitonService.sendTopic(newNot,subject.getPredmet());
 			  } catch
@@ -85,8 +91,6 @@ public class AppScheduler {
 
 			   }
 			 
-			
-			
 		}
 		
 		

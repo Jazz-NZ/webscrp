@@ -4,8 +4,15 @@ public class NewNotification {
 	
 	private String predmet;
 	private String poruka;
+	private String link;
 	
 	
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
+	}
 	public String getPredmet() {
 		return predmet;
 	}
