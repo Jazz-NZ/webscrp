@@ -105,12 +105,13 @@ public class ProveriKatedru {
 		   predmetNaSajtu =  katedra.getPredmet();
 		   porukaSajt = katedra.getPoruka();
 		   linkPorukeSajt = katedra.getLink();
+		   
 	        		
 			   //ukoliko si nasao predmet u bazi i poruka se promenila 
 		   if(predmetNaSajtu.equals(predmetUBazi) && porukaSajt != null && !porukaSajt.equals(porukaUBazi)) {
 	        			
 			  System.out.println("Nova vest izasla!");
-			  queryUpdate = "update "+ imeTabeleUBazi +" set poruka = '"+ porukaSajt +"',linkPoruke = '"+ linkPorukeSajt +"' where predmet = '"+ predmetUBazi +"'";
+			  queryUpdate = "update "+ imeTabeleUBazi +" set poruka = '"+ porukaSajt +"',linkPoruke = '"+linkPorukeSajt +"' where predmet = '"+ predmetUBazi +"'";
 			  statementQueryUpdate.executeUpdate(queryUpdate);
 	        			
 	        		//novi atributi ubaceni u bazu

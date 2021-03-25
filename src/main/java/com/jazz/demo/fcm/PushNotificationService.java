@@ -48,6 +48,7 @@ public class PushNotificationService {
     	Message message = Message.builder()
     	    .putData("predmet", newNot.getPredmet())
     	    .putData("poruka", newNot.getPoruka())
+    	    .putData("link", newNot.getLink())
     	    .setTopic(topic)
     	    .build();
 

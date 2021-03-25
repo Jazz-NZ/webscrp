@@ -109,6 +109,7 @@ public Katedra getMathAllVesti(String url, String predmet)  {
        // System.out.println(idStr);
         
         //id pravi problem, treba pretresti web scrape
+        link = "http://math.fon.bg.ac.rs" + link;
         
         
         news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
@@ -460,6 +461,7 @@ public Katedra getMathAktivnosti(String predmet) {
 		
 		String news = null;
 		String link = null;
+		
 		/*
 		 * String url =
 		 * "http://kvalitet.fon.bg.ac.rs/%D0%BF%D1%80%D0%B5%D0%B4%D0%BC%D0%B5%" +
