@@ -47,6 +47,7 @@ public class ProveriKatedru {
 		
 		try {
 			
+			//vraca listu predmeta sa novom porukom i cita i pise u bazu
 			return citajIPisiUBazu();
 		
 		} catch (SQLException e) {
@@ -61,17 +62,15 @@ public class ProveriKatedru {
 	
 	private LinkedList<Katedra> citajIPisiUBazu() throws SQLException {
 		
-		DataFromSite data = new DataFromSite();
 		LinkedList<Katedra> listaPredmetaSaNovomVesti = new LinkedList<>();
 		
+		//podaci za uporedjivanje
 		String predmetUBazi = null;
 		String porukaUBazi = null;
 		String linkPorukeUBazi = null;
-		
-		String predmetNaSajtu = null;
+//		String predmetNaSajtu = null;
 		String porukaSajt = null;
 		String linkPorukeSajt = null;
-		Katedra katedra = null;
 		
 		//otvaranje konekcija za bazu
 		Statement statementQuerryRead = DatabaseConnection.getConnection().createStatement();
@@ -84,7 +83,7 @@ public class ProveriKatedru {
 		//prolazim kroz tabelu 
 	   while(getPredmet.next()) {
 	        	
-	        //podaci za predmet iz baze
+	        //podaci predmeta iz baze
 		   predmetUBazi = getPredmet.getString("predmet");
 		   porukaUBazi = getPredmet.getString("poruka");
 	       linkPorukeUBazi = getPredmet.getString("linkPoruke"); 	
@@ -93,28 +92,22 @@ public class ProveriKatedru {
 		   System.out.println("poruka u bazi: " + porukaUBazi);
 	       System.out.println("link poruke u bazi: " + linkPorukeUBazi);
 
-		   if(imeTabeleUBazi.equals("predmetimmklab")) 
-			   katedra = data.getMmklab(urlKatedre + predmetUBazi, predmetUBazi); 
-		   
-		   else if(imeTabeleUBazi.equals("predmetimath"))
-			   katedra = data.getMathAllVesti(urlKatedre + predmetUBazi, predmetUBazi); 
-
-		   else if(imeTabeleUBazi.equals("predmetimathdodatni"))
-			   katedra = data.getMathAktivnosti(predmetUBazi);
-		   
-		   predmetNaSajtu =  katedra.getPredmet();
+	      
+	       Katedra katedra = vratiKatedru(predmetUBazi);
+		
+	       //podaci sa sajta
 		   porukaSajt = katedra.getPoruka();
 		   linkPorukeSajt = katedra.getLink();
 	        		
-			   //ukoliko si nasao predmet u bazi i poruka se promenila 
-		   if(predmetNaSajtu.equals(predmetUBazi) && porukaSajt != null && !porukaSajt.equals(porukaUBazi)) {
+			   //ukoliko se poruka na sajtu promenila izasla je nova vest
+		   if(porukaSajt != null && !porukaSajt.equals(porukaUBazi)) {
 	        			
 			  System.out.println("Nova vest izasla!");
 			  queryUpdate = "update "+ imeTabeleUBazi +" set poruka = '"+ porukaSajt +"',linkPoruke = '"+ linkPorukeSajt +"' where predmet = '"+ predmetUBazi +"'";
 			  statementQueryUpdate.executeUpdate(queryUpdate);
 	        			
 	        		//novi atributi ubaceni u bazu
-			  System.out.println("predmet : " + predmetNaSajtu);
+			  System.out.println("predmet : " + predmetUBazi);
 			  System.out.println("poruka: " + porukaSajt);
 			  System.out.println("link poruke: " + linkPorukeSajt);		
 				   //ubaci predmet u listu predmeta sa novom vesti
@@ -124,6 +117,50 @@ public class ProveriKatedru {
 	   }
 	
 	   return listaPredmetaSaNovomVesti;
+	}
+
+	//vraca katedru za koju se radi webscrp
+	private Katedra vratiKatedru(String predmetUBazi) {
+
+		//Koje su nam mogucnosti za predmete koji nemaju uopste vesti za svoju stranicu?
+		//da izbacimo samo poslednju vest na celoj katedri ili samo te predmete da izbacimo 
+		//jer su skoro svi takvi predmeti uslovni na 4.god a to nam i onako nije jaci deo ciljne grupe
+		
+		DataFromSite data = new DataFromSite();
+			
+		switch(imeTabeleUBazi) {
+			
+			case "predmetimmklab":
+				return data.getMmklab(urlKatedre + predmetUBazi, predmetUBazi);
+
+			//ona 4 predmeta 
+			case "predmetimath":
+				return  data.getMathAllVesti(urlKatedre + predmetUBazi, predmetUBazi); 
+				
+			//softver-otvorenog-koda, upravljanje-softverskim-projektima, veb-programiranje nemau vesti	
+			case "predmetiai":
+				return data.getAi(urlKatedre + predmetUBazi, predmetUBazi);
+					
+			case "predmetilabis":
+				return  data.getLabsys(urlKatedre + predmetUBazi, predmetUBazi);
+				
+			case "predmetiis":
+				return  data.getIS(urlKatedre + predmetUBazi + "/vesti", predmetUBazi);
+				
+			//statistika-u-menadzmentu-2 - jedini predmet na statlabu za koji uopste nigde nema vesti
+			case "predmetistatlab":
+				return data.getStatlab(urlKatedre + predmetUBazi, predmetUBazi);
+				
+			//softverski-paterni i napredne-java-tehnologije-2 nemaju vesti
+			case "predmetisilab":
+				return data.getSilab(urlKatedre + predmetUBazi +"/?lang=lat", predmetUBazi);
+			
+				
+				
+			}
+		
+	       //nikad nece biti null
+	       return null;
 	}
 
 

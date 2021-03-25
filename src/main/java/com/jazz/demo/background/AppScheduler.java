@@ -16,11 +16,11 @@ import com.jazz.demo.fcm.PushNotificationService;
 @Service
 public class AppScheduler {
 
-	ProveriMath proveri = new ProveriMath();
-	ProveriMMKLAB proveriMMKLAB = new ProveriMMKLAB();
-	ProveriIS proveriIs = new ProveriIS();
-	
-	DataFromSite data = new DataFromSite();
+//	ProveriMath proveri = new ProveriMath();
+//	ProveriMMKLAB proveriMMKLAB = new ProveriMMKLAB();
+//	ProveriIS proveriIs = new ProveriIS();
+//	
+//	DataFromSite data = new DataFromSite();
 	
 
 	@Autowired
@@ -37,29 +37,38 @@ public class AppScheduler {
 
 		
 
-		//parametri za proveru za katedru iz mate
-	//	String urlKatedre = "http://math.fon.bg.ac.rs/kursevi/";
-	//	String imeTabeleUBazi = "predmetimath";
+		String urlKatedre = "http://math.fon.bg.ac.rs/kursevi/";
+		String imeTabeleUBazi = "predmetimath";
 		
-
-		//parametri za proveru za kateru mmklab - napravi novu tabelu sa nazivom predmetimmklab i ubaci sve predmete kao i za matu i radice ti
-		//String urlKatedre = "http://www.mmklab.fon.bg.ac.rs/nastava/osnovne-studije/";
-		//String imeTabeleUBazi = "predmetimmklab";
-
-		//parametri za dodatne predmete iz mate
-		String urlKatedre = "http://math.fon.bg.ac.rs/";
-		String imeTabeleUBazi = "predmetimathdodatni";
-		
-		//parametri za proveru za kateru mmklab 
+		//mmklab 
 //		String urlKatedre = "http://www.mmklab.fon.bg.ac.rs/nastava/osnovne-studije/";
 //		String imeTabeleUBazi = "predmetimmklab";
 
-//		
-		//radi ali pogledaj metodu proveraKatedte
-		ProveriKatedru katedra = new ProveriKatedru(urlKatedre, imeTabeleUBazi);
-		LinkedList<Katedra> predmetiSaNovomVesti = katedra.proveraKatedre();
+		//labis
+//		String urlKatedre = "http://labsys.fon.bg.ac.rs/";
+//		String imeTabeleUBazi = "predmetilabis";
 		
-		System.out.println("Predmet za koje je izasla nova vest:");
+		//is
+//		String urlKatedre = "http://is.fon.bg.ac.rs/";
+//		String imeTabeleUBazi = "predmetiis";
+		
+		//statlab
+//		String urlKatedre = "http://statlab.fon.bg.ac.rs/predmeti/";
+//		String imeTabeleUBazi = "predmetistatlab";
+		
+		//silab
+//		String urlKatedre = "http://silab.fon.bg.ac.rs/category/%D0%B2%D0%B5%D1%81%D1%82%D0%B8/";
+//		String imeTabeleUBazi = "predmetisilab";
+		
+		//ai
+//		String urlKatedre = "http://ai.fon.bg.ac.rs/osnovne/";
+//		String imeTabeleUBazi = "predmetiai";
+
+		ProveriKatedru provera = new ProveriKatedru(urlKatedre, imeTabeleUBazi);
+		LinkedList<Katedra> predmetiSaNovomVesti = provera.proveraKatedre();
+		
+		System.out.println("Predmei za koje je izasla nova vest:");
+		
 		for (Katedra subject : predmetiSaNovomVesti) {
 			
 			 NewNotification newNot = new NewNotification();

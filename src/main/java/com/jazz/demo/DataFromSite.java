@@ -84,103 +84,85 @@ public class DataFromSite {
 		return sub;
 	}
 	
-public Katedra getMathAllVesti(String url, String predmet)  {
+	public Katedra getMathAllVesti(String url, String predmet)  {
 		
-	int id = -1;
-	String news = null;
-	String link = null;
+		String news = null;
+		String link = null;
 	
-	try {
-		Document doc = Jsoup.connect(url).get();
+		try {
+			Document doc = Jsoup.connect(url).get();
 		
-		//System.out.println(doc);
+			//System.out.println(doc);
 		
-		String title = doc.title();
-        //System.out.println("title : " + title);
-        
-        Elements elements = doc.select("ul.list-unstyled");
+			String title = doc.title();
+			//System.out.println("title : " + title);
+			
+			Elements elements = doc.select("ul.list-unstyled");
 		
+			// System.out.println(elements.select("li.recent-news-wrap").get(0));
         
-       // System.out.println(elements.select("li.recent-news-wrap").get(0));
+			link  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
         
-        
-        link  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
-        
-       // System.out.println(idStr);
-        
-        //id pravi problem, treba pretresti web scrape
-        
-        
-        news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
-        System.out.println(news);
+			news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
+			System.out.println(news);
          
 		
-	}catch (Exception e) {
-		System.err.println("Error with connecting to url or getting data from url");
-	}
+		}catch (Exception e) {
+			System.err.println("Error with connecting to url or getting data from url");
+		}
 	
-		//pogledaj ovo set id i vest
+			Katedra sub = new Katedra();
+			
+			sub.setPoruka(news);
+			sub.setPredmet(predmet);
+			sub.setLink(link);
 		
+			return sub;
+	}
+		
+	//ovo nam nece trebati uopste
+	public Katedra getMathAktivnosti(String predmet) {
+	
+		String url= "http://math.fon.bg.ac.rs/";
+		String news = null;
+		String link = null;
+	
+		try {
+			Document doc = Jsoup.connect(url).get();
+		
+			//System.out.println(doc);
+		
+			String title = doc.title();
+			//System.out.println("title : " + title);
+			
+			Elements elements = doc.select("ul.list-unstyled");
+		
+			// System.out.println(elements.select("li.recent-news-wrap").get(0));
+        
+			link  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
+        
+			news = elements.select("li.up-event-wrap").get(0).select("a").first().attr("title");
+			System.out.println(news);
+         
+		
+		}catch (Exception e) {
+			System.err.println("Error with connecting to url or getting data from url");
+		}
+
 		Katedra sub = new Katedra();
-		
-		sub.setPoruka(news);
+	
 		sub.setPredmet(predmet);
+		sub.setPoruka(news);
 		sub.setLink(link);
 		
+	
 		return sub;
-	}
-		
-	
-public Katedra getMathAktivnosti(String predmet) {
-	
-	String url= "http://math.fon.bg.ac.rs/";
-	
-	int id = -1;
-	String news = null;
-	String link = null;
-	
-	try {
-		Document doc = Jsoup.connect(url).get();
-		
-		//System.out.println(doc);
-		
-		String title = doc.title();
-        //System.out.println("title : " + title);
-        
-        Elements elements = doc.select("ul.list-unstyled");
-		
-       // System.out.println(elements.select("li.recent-news-wrap").get(0));
-        
-        
-        link  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
-        
-        //System.out.println(idStr);
-        
-        //id pravi problem, treba pretresti web scrape
-        //id = Integer.parseInt(idStr.substring(7));
-        
-        news = elements.select("li.up-event-wrap").get(0).select("a").first().attr("title");
-        System.out.println(news);
-         
-		
-	}catch (Exception e) {
-		System.err.println("Error with connecting to url or getting data from url");
-	}
-
-	Katedra sub = new Katedra();
-	
-	sub.setPredmet(predmet);
-	sub.setPoruka(news);
-	sub.setLink(link);
-		
-	
-	return sub;
 	}
 	
 	public Katedra getMmklab(String url, String predmet) {
 		
 		
-//String url= "http://www.mmklab.fon.bg.ac.rs/sr/nastava/osnovne-studije/oikt/";
+		//String url= "http://www.mmklab.fon.bg.ac.rs/sr/nastava/osnovne-studije/oikt/";
 		
 		int id = -1;
 		String news = null;
@@ -216,14 +198,14 @@ public Katedra getMathAktivnosti(String predmet) {
 			System.err.println("Error with connecting to url or getting data from url");
 		}
 
-	Katedra sub = new Katedra();	
+		Katedra sub = new Katedra();	
 	
-	sub.setPoruka(news);
-	sub.setPredmet(predmet);
-	sub.setLink(link);
+		sub.setPoruka(news);
+		sub.setPredmet(predmet);
+		sub.setLink(link);
 	
 	
-	return sub;
+		return sub;
 	
 	}
 
@@ -238,21 +220,17 @@ public Katedra getMathAktivnosti(String predmet) {
 			
 			//System.out.println(doc);
 			
-			String title = doc.title();
+//			String title = doc.title();
             //System.out.println("title : " + title);
             
             Elements elements = doc.select("main");
 			//System.out.println(elements);
             
-            //System.out.println(elements.select("div.blog-item-wrap").get(0));
-            
-            
-            
-            
+//            System.out.println(elements.select("div.blog-item-wrap").get(0));
             
             link  = elements.select("div.blog-item-wrap").get(0).select("a").first().attr("href");
             
-           // System.out.println(idStr);
+            System.out.println(link);
             
             //id pravi problem, treba pretresti web scrape
             //id = Integer.parseInt(idStr.substring(7));
@@ -304,7 +282,7 @@ public Katedra getMathAktivnosti(String predmet) {
 	public Katedra getLabsys(String url, String predmet) {
 		String news = null;
 		String link = null;
-		//String url = "http://labsys.fon.bg.ac.rs/teorija-sistema";
+		String urlKatedre = "http://labsys.fon.bg.ac.rs/";
 
 		try {
 			Document doc = Jsoup.connect(url).get();
@@ -329,7 +307,7 @@ public Katedra getMathAktivnosti(String predmet) {
 		}
 		
 		Katedra sub = new Katedra();
-		sub.setLink(link);
+		sub.setLink(urlKatedre + link);
 		sub.setPoruka(news);
 		sub.setPredmet(predmet);
 		
@@ -391,10 +369,6 @@ public Katedra getMathAktivnosti(String predmet) {
 			//System.out.println(elements);
             
             //System.out.println(elements.select("h1.entry-title").get(0));
-            
-            
-            
-            
             
             link  = elements.select("h1.entry-title").get(0).select("a").first().attr("href");
             
