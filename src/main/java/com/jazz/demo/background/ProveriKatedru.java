@@ -75,11 +75,12 @@ public class ProveriKatedru {
 		//otvaranje konekcija za bazu
 		Statement statementQuerryRead = DatabaseConnection.getConnection().createStatement();
 		Statement statementQueryUpdate = DatabaseConnection.getConnection().createStatement();
-		System.out.println("Connection to database established..");
+		System.out.println("Connection to: "+ imeTabeleUBazi +"  database established..");
 		String queryRead = "select * from "+ imeTabeleUBazi +" ";
         String queryUpdate = null;
 		ResultSet getPredmet = statementQuerryRead.executeQuery(queryRead);
 	        
+	    System.err.println(imeTabeleUBazi + ":");
 		//prolazim kroz tabelu 
 	   while(getPredmet.next()) {
 	        	
@@ -91,7 +92,7 @@ public class ProveriKatedru {
 		   System.out.println("predmet : " + predmetUBazi);
 		   System.out.println("poruka u bazi: " + porukaUBazi);
 	       System.out.println("link poruke u bazi: " + linkPorukeUBazi);
-
+	       System.out.println();
 	      
 	       Katedra katedra = vratiKatedru(predmetUBazi);
 		
@@ -107,10 +108,11 @@ public class ProveriKatedru {
 			  queryUpdate = "update "+ imeTabeleUBazi +" set poruka = '"+ porukaSajt +"',linkPoruke = '"+linkPorukeSajt +"' where predmet = '"+ predmetUBazi +"'";
 			  statementQueryUpdate.executeUpdate(queryUpdate);
 	        			
-	        		//novi atributi ubaceni u bazu
-			  System.out.println("predmet : " + predmetUBazi);
-			  System.out.println("poruka: " + porukaSajt);
-			  System.out.println("link poruke: " + linkPorukeSajt);		
+			  System.err.println("Novi atributi ubaceni u bazu:");
+			  System.out.println("predmet: " + predmetUBazi);
+			  System.out.println("nova poruka: " + porukaSajt);
+			  System.out.println("link poruke: " + linkPorukeSajt);	
+			  System.out.println();
 				   //ubaci predmet u listu predmeta sa novom vesti
 			  listaPredmetaSaNovomVesti.add(katedra);
 				   
@@ -138,7 +140,7 @@ public class ProveriKatedru {
 			case "predmetimath":
 				return  data.getMathAllVesti(urlKatedre + predmetUBazi, predmetUBazi); 
 				
-			//softver-otvorenog-koda, upravljanje-softverskim-projektima, veb-programiranje nemau vesti	
+			//softver-otvorenog-koda, upravljanje-softverskim-projektima, veb-programiranje nemaju vesti	
 			case "predmetiai":
 				return data.getAi(urlKatedre + predmetUBazi, predmetUBazi);
 					
@@ -156,9 +158,32 @@ public class ProveriKatedru {
 			case "predmetisilab":
 				return data.getSilab(urlKatedre + predmetUBazi +"/?lang=lat", predmetUBazi);
 			
+			case "predmetictm":
+				return data.getCtm(urlKatedre + predmetUBazi, predmetUBazi);
 				
+			case "predmetifinansije":
+				return data.getFinansije(urlKatedre + predmetUBazi + "/Vesti.html", predmetUBazi);
 				
-			}
+			case "predmetiimi":
+				return data.getImi(urlKatedre + predmetUBazi +"/category/vesti/" , predmetUBazi);
+			
+			//ova nesrecna katedra je u poslednjih pet godina izbacivala samo vesti za oi1 i oi2 i omaklo joj se skoro iz teorije igara jednu
+				//mislim da bi trebali neke predmete da izbacimo jer ovde sada 5 predmeta nema vest
+			case "predmetilaboi":
+				if(predmetUBazi.equals("operaciona-istrazivanja-1") || predmetUBazi.equals("operaciona-istrazivanja-2"))
+					return data.getLaboi(urlKatedre + predmetUBazi, predmetUBazi);
+				
+				return data.getLaboi(urlKatedre + "izborni-predmeti/" + predmetUBazi, predmetUBazi);
+		
+			//nemaju nista na sajtu 
+			case "predmetiorganizacija":
+				return data.getOrganizacija(urlKatedre + predmetUBazi + "/vesti-" + predmetUBazi, predmetUBazi);
+			
+			//dobar webscrp,ne znam zasto ne radi
+			case "predmetikvalitet":
+				return data.getKvalitet(urlKatedre + predmetUBazi, predmetUBazi);
+				
+		}
 		
 	       //nikad nece biti null
 	       return null;

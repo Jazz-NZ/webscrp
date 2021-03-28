@@ -71,7 +71,7 @@ public class DataFromSite {
             id = Integer.parseInt(idStr.substring(7));
             
             news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
-            System.out.println(news);
+//            System.out.println(news);
              
 			
 		}catch (Exception e) {
@@ -104,16 +104,11 @@ public class DataFromSite {
 			link  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
         
 			news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
-			System.out.println(news);
-        
-       // System.out.println(idStr);
-        
-        //id pravi problem, treba pretresti web scrape
-        link = "http://math.fon.bg.ac.rs" + link;
+//			System.out.println(news);
         
         
-        news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
-        System.out.println(news);
+			link = "http://math.fon.bg.ac.rs" + link;
+        
 		
 		}catch (Exception e) {
 			System.err.println("Error with connecting to url or getting data from url");
@@ -150,7 +145,7 @@ public class DataFromSite {
 			link  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
         
 			news = elements.select("li.up-event-wrap").get(0).select("a").first().attr("title");
-			System.out.println(news);
+//			System.out.println(news);
          
 		
 		}catch (Exception e) {
@@ -199,7 +194,7 @@ public class DataFromSite {
             news = elements.select("li").get(0).select("a").first().attr("title");
             //System.out.println(news);
             news = news.replace("Permanent Link to ", "");
-            System.out.println(news);
+//            System.out.println(news);
              
 			
 		}catch (Exception e) {
@@ -238,7 +233,7 @@ public class DataFromSite {
             
             link  = elements.select("div.blog-item-wrap").get(0).select("a").first().attr("href");
             
-            System.out.println(link);
+//            System.out.println(link);
             
             //id pravi problem, treba pretresti web scrape
             //id = Integer.parseInt(idStr.substring(7));
@@ -246,7 +241,7 @@ public class DataFromSite {
             news = elements.select("div.blog-item-wrap").get(0).select("a").first().attr("title");
             //System.out.println(news);
             //news = news.replace("Permanent Link to ", "");
-            System.out.println(news);
+//            System.out.println(news);
              
 			
 		}catch (Exception e) {
@@ -301,13 +296,13 @@ public class DataFromSite {
 			// System.out.println("title : " + title);
 
 			Elements elements = doc.select("h2.node-title");
-			System.out.println(elements.select("h2.node-title"));
+//			System.out.println(elements.select("h2.node-title"));
 
 			link = elements.select("h2.node-title").get(0).select("a").first().attr("href");
-			System.out.println(link);
+//			System.out.println(link);
 
 			news = elements.select("h2.node-title").get(0).text();
-		    System.out.println(news);
+//		    System.out.println(news);
 
 			
 		} catch (Exception e) {
@@ -336,13 +331,13 @@ public class DataFromSite {
 			// System.out.println("title : " + title);
 
 			Elements elements = doc.select("h4");
-			System.out.println(elements.select("h4").get(0));
+//			System.out.println(elements.select("h4").get(0));
 
 			link = elements.select("h4").get(0).select("a").first().attr("href");
-			System.out.println(link);
+//			System.out.println(link);
 
 			news = elements.select("h4").get(0).text();
-			System.out.println(news);
+//			System.out.println(news);
 
 			
 		} catch (Exception e) {
@@ -380,7 +375,7 @@ public class DataFromSite {
             
             link  = elements.select("h1.entry-title").get(0).select("a").first().attr("href");
             
-            System.out.println(link);
+//            System.out.println(link);
             
             //id pravi problem, treba pretresti web scrape
             //id = Integer.parseInt(idStr.substring(7));
@@ -388,7 +383,7 @@ public class DataFromSite {
             news = elements.select("h1.entry-title").get(0).select("a").first().attr("title");
             //System.out.println(news);
             news = news.replace("Permalink to ", "");
-            System.out.println(news);
+//            System.out.println(news);
              
 			
 		}catch (Exception e) {
@@ -417,13 +412,13 @@ public class DataFromSite {
 			// System.out.println("title : " + title);
 
 			Elements elements = doc.select("h1.excerpt-title");
-			System.out.println(elements.select("h1.excerpt-title"));
+//			System.out.println(elements.select("h1.excerpt-title"));
 
 			link = elements.select("h1.excerpt-title").get(1).select("a").first().attr("href");
-			System.out.println(link);
+//			System.out.println(link);
 
 			news = elements.select("h1.excerpt-title").get(1).text();
-			System.out.println(news);
+//			System.out.println(news);
 
 			
 		} catch (Exception e) {
@@ -443,6 +438,8 @@ public class DataFromSite {
 		String news = null;
 		String link = null;
 		
+//		System.out.println(url);
+		
 		/*
 		 * String url =
 		 * "http://kvalitet.fon.bg.ac.rs/%D0%BF%D1%80%D0%B5%D0%B4%D0%BC%D0%B5%" +
@@ -460,13 +457,13 @@ public class DataFromSite {
 			// System.out.println("title : " + title);
 
 			Elements elements = doc.select("h2.entry-title");
-			System.out.println(elements.select("h2.entry-title"));
+//			System.out.println(elements.select("h2.entry-title"));
 
 			link = elements.select("h2.entry-title").get(0).select("a").first().attr("href");
-			System.out.println(link);
-
+//			System.out.println(link);
+//
 			news = elements.select("h2.entry-title").get(0).text();
-		    System.out.println(news);
+//		    System.out.println(news);
 
 			
 		} catch (Exception e) {
@@ -484,6 +481,8 @@ public class DataFromSite {
 	public Katedra getOrganizacija(String url, String predmet) {
 		
 		//String url= "http://organizacija.fon.bg.ac.rs/category/osnovi-organizacije/vesti-osnovi-organizacije/";
+		
+//		System.out.println(url);
 		
 		int id = -1;
 		String news = null;
@@ -503,18 +502,15 @@ public class DataFromSite {
             //System.out.println(elements.select("h3.header_font.bd_headings_text_shadow").get(0));
             
             
-            
-            
-            
            link  = elements.select("h3.header_font.bd_headings_text_shadow").get(0).select("a").first().attr("href");
             
-           System.out.println(link);
+//           System.out.println(link);
             
             //id pravi problem, treba pretresti web scrape
             //id = Integer.parseInt(idStr.substring(7));
             
             news = elements.select("h3.header_font.bd_headings_text_shadow").get(0).text();
-            System.out.println(news);
+//            System.out.println(news);
            // news = news.replace("Permalink to ", "");
            // System.out.println(news);
              
@@ -549,18 +545,18 @@ public class DataFromSite {
 	        Elements elements = doc.select("div.post-title");
 			
 	        
-	        System.out.println(elements.select("h2.entry-title").get(0));
+//	        System.out.println(elements.select("h2.entry-title").get(0));
 	        
 	        
 	        link  = elements.select("h2.entry-title").get(0).select("a").first().attr("href");
 	        
-	        System.out.println(link);
+//	        System.out.println(link);
 	        
 	        //id pravi problem, treba pretresti web scrape
 	        
 	        
 	        news = elements.select("h2.entry-title").get(0).select("a").text();
-	        System.out.println(news);
+//	        System.out.println(news);
 	}catch(Exception e){
 		System.err.println("Greska: preuzimanje sa sajta!");
 		}
@@ -593,13 +589,9 @@ public class DataFromSite {
             
             //System.out.println(elements.select("h1.entry-title").get(0));
             
-            
-            
-            
-            
             link  = elements.select("h1.entry-title").get(0).select("a").first().attr("href");
             
-            System.out.println(link);
+//            System.out.println(link);
             
             //id pravi problem, treba pretresti web scrape
             //id = Integer.parseInt(idStr.substring(7));
@@ -607,7 +599,7 @@ public class DataFromSite {
             news = elements.select("h1.entry-title").get(0).select("a").first().attr("title");
             //System.out.println(news);
             news = news.replace("Permalink to ", "");
-            System.out.println(news);
+//            System.out.println(news);
              
 			
 		}catch (Exception e) {
@@ -698,19 +690,15 @@ public class DataFromSite {
             
             //System.out.println(elements.select("h2.title").get(0));
             
-            
-            
-            
-            
             link  = elements.select("h2.title").get(0).select("a").first().attr("href");
             
-            System.out.println(link);
+//            System.out.println(link);
             
             //id pravi problem, treba pretresti web scrape
             //id = Integer.parseInt(idStr.substring(7));
             
             news = elements.select("h2.title").get(0).select("a").text();
-            System.out.println(news);
+//            System.out.println(news);
            // news = news.replace("Permalink to ", "");
            // System.out.println(news);
              
@@ -719,7 +707,7 @@ public class DataFromSite {
 			System.err.println("Error with connecting to url or getting data from url");
 		}
 		Katedra sub = new Katedra();
-		sub.setLink(link);
+		sub.setLink("http://finansije.fon.bg.ac.rs" + link);
 		sub.setPoruka(news);
 		sub.setPredmet(predmet);
 		
@@ -828,21 +816,18 @@ public class DataFromSite {
             Elements elements = doc.select("div.post-content");
 			//System.out.println(elements);
             
-            System.out.println(elements.select("h2.post-title.entry-title").get(0));
-            
-            
-            
+//            System.out.println(elements.select("h2.post-title.entry-title").get(0));
             
             
             link  = elements.select("h2.post-title.entry-title").get(0).select("a").first().attr("href");
             
-            System.out.println(link);
+//            System.out.println(link);
             
             //id pravi problem, treba pretresti web scrape
             //id = Integer.parseInt(idStr.substring(7));
             
             news = elements.select("h2.post-title.entry-title").get(0).select("a").text();
-            System.out.println(news);
+//            System.out.println(news);
            // news = news.replace("Permalink to ", "");
            // System.out.println(news);
              
