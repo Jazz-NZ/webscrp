@@ -42,12 +42,10 @@ public class ProveriKatedru {
 	}
 
 	//vraca listu sa predmetima za koje je izaslo novo obavestenje za odgovarajucu katedru
-	
 	public LinkedList<Katedra> proveraKatedre(){
 		
 		try {
 			
-			//vraca listu predmeta sa novom porukom i cita i pise u bazu
 			return citajIPisiUBazu();
 		
 		} catch (SQLException e) {
@@ -124,10 +122,6 @@ public class ProveriKatedru {
 
 	//vraca katedru za koju se radi webscrp
 	private Katedra vratiKatedru(String predmetUBazi) {
-
-		//Koje su nam mogucnosti za predmete koji nemaju uopste vesti za svoju stranicu?
-		//da izbacimo samo poslednju vest na celoj katedri ili samo te predmete da izbacimo 
-		//jer su skoro svi takvi predmeti uslovni na 4.god a to nam i onako nije jaci deo ciljne grupe
 		
 		DataFromSite data = new DataFromSite();
 			
@@ -138,7 +132,7 @@ public class ProveriKatedru {
 
 			//ona 4 predmeta 
 			case "predmetimath":
-				return  data.getMathAllVesti(urlKatedre + predmetUBazi, predmetUBazi); 
+				return  data.getMath(urlKatedre + predmetUBazi, predmetUBazi); 
 				
 			//softver-otvorenog-koda, upravljanje-softverskim-projektima, veb-programiranje nemaju vesti	
 			case "predmetiai":
@@ -181,7 +175,7 @@ public class ProveriKatedru {
 			
 			//dobar webscrp,ne znam zasto ne radi
 			case "predmetikvalitet":
-				return data.getKvalitet(urlKatedre + predmetUBazi, predmetUBazi);
+				return data.getKvalitet(urlKatedre + predmetUBazi + "/", predmetUBazi);
 				
 		}
 		
