@@ -8,9 +8,9 @@ public class DatabaseConnection {
 
 	 public static Connection getConnection()  {
 
-	        String urlConnector = "jdbc:mysql://localhost:3306/webscrp";
-	        String usernameConnector = "razal"; //root
-	        String passwordConnetor = "razal";  //root
+	        String urlConnector = "jdbc:mysql://localhost:3306/webscrp?serverTimezone=Europe/Rome";
+	        String usernameConnector = "root"; //razal
+	        String passwordConnetor = "root";  //razal
 	        Connection connection = null;
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver");
