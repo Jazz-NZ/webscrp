@@ -1,6 +1,8 @@
 package com.jazz.demo;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,7 +24,7 @@ public class DataFromSite {
 		this.poruka = poruka;
 	}
 
-	public Katedra getMath(String url)  {
+	public Katedra getMathAktivnosti(String url)  {
 		
 		/*
 		 * int id = -1; String news = null;
@@ -45,123 +47,146 @@ public class DataFromSite {
 		 */	
 		//ubaciti bazu podataka
 		
+		return new Katedra();
 		
-		int id = -1;
-		String news = null;
-		
-		try {
-			Document doc = Jsoup.connect(url).get();
-			
-			//System.out.println(doc);
-			
-			//String title = doc.title();
-            //System.out.println("title : " + title);
-            
-            Elements elements = doc.select("ul.list-unstyled");
-			
-            
-           // System.out.println(elements.select("li.recent-news-wrap").get(0));
-        
-            
-            String idStr  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
-            
-           // System.out.println(idStr);
-            
-            //id pravi problem, treba pretresti web scrape
-            id = Integer.parseInt(idStr.substring(7));
-            
-            news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
-//            System.out.println(news);
-             
-			
-		}catch (Exception e) {
-			System.err.println("Error with connecting to url or getting data from url");
-		}
-		
-		Katedra sub = new Katedra();
-		sub.setPoruka(news);
-		
-		return sub;
 	}
 	
-	public Katedra getMathAllVesti(String url, String predmet)  {
+	public Katedra getMath(String url, String predmet)  {
 		
-		String news = null;
-		String link = null;
+		Katedra katedra = new Katedra();
+		
+		String linkVesti = null;
+		String newsVesti = null;
+		String dateAndTimeVesti = null; 
+		String danVesti = null;
+		String mesecVesti = null;
+		String godinaVesti = null;
+		
+		String linkAkt = null;
+		String newsAkt = null;
+		String dateAkt = null; 
+		String danAkt = null;
+		String mesecAkt = null;
+		String godinaAkt = null;
 	
 		try {
 			Document doc = Jsoup.connect(url).get();
-		
-			//System.out.println(doc);
-		
-			String title = doc.title();
-			//System.out.println("title : " + title);
 			
 			Elements elements = doc.select("ul.list-unstyled");
 		
-			// System.out.println(elements.select("li.recent-news-wrap").get(0));
-        
-			link  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
-        
-			news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
-//			System.out.println(news);
-        
-        
-			link = "http://math.fon.bg.ac.rs" + link;
-        
+			//WEBSCRAPE VESTI:
+			 linkVesti  = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
+			 newsVesti = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
+			 dateAndTimeVesti = elements.select("div.recent-news-date").get(0).text();
+			 linkVesti = "http://math.fon.bg.ac.rs" + linkVesti;
+			
+			//WEBSCRAPE AKTIVNOSTI:
+			 linkAkt  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
+			 newsAkt = elements.select("li.up-event-wrap").get(0).select("a").first().attr("title");
+			 dateAkt = elements.select("div.up-event-date").get(0).text();
+			 linkAkt = "http://math.fon.bg.ac.rs" + linkAkt;
+			
 		
 		}catch (Exception e) {
 			System.err.println("Error with connecting to url or getting data from url");
 		}
 	
-			Katedra sub = new Katedra();
-			
-			sub.setPoruka(news);
-			sub.setPredmet(predmet);
-			sub.setLink(link);
+		//formatiranje datuma za vesti
+		String nizDateAndTimeVesti[] = dateAndTimeVesti.split(" ");
+		String datumVestiSplit = nizDateAndTimeVesti[0];
+		String datumVesti[] = datumVestiSplit.split("\\.");
+			danVesti = datumVesti[0];
+			mesecVesti = datumVesti[1];
+			godinaVesti = datumVesti[2];
 		
-			return sub;
+		//fromatiranje datuma za aktivnosti
+		String nizDateAkt[] = dateAkt.split("\\.");
+			danAkt = nizDateAkt[0];
+			mesecAkt = nizDateAkt[1];
+			godinaAkt = nizDateAkt[2];
+			
+		//true - poslednja izasla aktivnost, false - vest	
+		boolean poslednjiDatum = proveriDatume(godinaAkt,godinaVesti,mesecAkt,mesecVesti,danAkt,danVesti);	
+			
+		//posalji aktivnost za proveravani predmet
+		if(proveraPredmetaZaAktinvost("Математике 1", newsAkt) && predmet == "matematika1" && poslednjiDatum) {
+			
+			katedra.setPoruka(newsAkt);
+			katedra.setPredmet(predmet);
+			katedra.setLink(linkAkt);
+			
+		}
+		
+		else if (proveraPredmetaZaAktinvost("Математике 2", newsAkt) && predmet == "matematika2" && poslednjiDatum) {
+			
+			katedra.setPoruka(newsAkt);
+			katedra.setPredmet(predmet);
+			katedra.setLink(linkAkt);
+		}
+		
+		else if (proveraPredmetaZaAktinvost("Математике 3", newsAkt) && predmet == "matematika3" && poslednjiDatum) {
+			
+			katedra.setPoruka(newsAkt);
+			katedra.setPredmet(predmet);
+			katedra.setLink(linkAkt);
+		}
+		
+		else if ( (proveraPredmetaZaAktinvost("ДМСа", newsAkt) || 
+				proveraPredmetaZaAktinvost("ДМС-а", newsAkt)) && predmet == "dms" && poslednjiDatum) {
+			
+			katedra.setPoruka(newsAkt);
+			katedra.setPredmet(predmet);
+			katedra.setLink(linkAkt);
+		}
+		
+		//posalji aktivnost svim predmetima
+		else if(!proveraPredmetaZaAktinvost("Математике 1", newsAkt) &&
+				!proveraPredmetaZaAktinvost("Математике 2", newsAkt) && 
+				!proveraPredmetaZaAktinvost("Математике 3", newsAkt) &&
+				!proveraPredmetaZaAktinvost("ДМСа", newsAkt) && 
+				!proveraPredmetaZaAktinvost("ДМС-а", newsAkt) && poslednjiDatum) {
+			
+			katedra.setPoruka(newsAkt);
+			katedra.setPredmet(predmet);
+			katedra.setLink(linkAkt);
+			
+		}
+		//posalji vest
+		else {
+		
+			katedra.setPoruka(newsVesti);
+			katedra.setPredmet(predmet);
+			katedra.setLink(linkVesti);
+		}
+			return katedra;
 	}
 		
-	//ovo nam nece trebati uopste
-	public Katedra getMathAktivnosti(String predmet) {
-	
-		String url= "http://math.fon.bg.ac.rs/";
-		String news = null;
-		String link = null;
-	
-		try {
-			Document doc = Jsoup.connect(url).get();
+	private boolean proveriDatume(String godinaAkt, String godinaVesti, String mesecAkt, String mesecVesti,String danAkt, String danVesti) {
 		
-			//System.out.println(doc);
+		if(Integer.parseInt(godinaAkt) > Integer.parseInt(godinaVesti)) 
+			return true;
 		
-			String title = doc.title();
-			//System.out.println("title : " + title);
-			
-			Elements elements = doc.select("ul.list-unstyled");
+		else if(Integer.parseInt(mesecAkt) > Integer.parseInt(mesecVesti)) 
+			return true;		
 		
-			// System.out.println(elements.select("li.recent-news-wrap").get(0));
-        
-			link  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
-        
-			news = elements.select("li.up-event-wrap").get(0).select("a").first().attr("title");
-//			System.out.println(news);
-         
+		else if(Integer.parseInt(danAkt) > Integer.parseInt(danVesti))  
+			return true;		
 		
-		}catch (Exception e) {
-			System.err.println("Error with connecting to url or getting data from url");
-		}
+		else 
+			return false;
+		
+	}
 
-		Katedra sub = new Katedra();
-	
-		sub.setPredmet(predmet);
-		sub.setPoruka(news);
-		sub.setLink(link);
+	//proverava da li se naziv predmeta nalazi u aktivnosti
+	private boolean proveraPredmetaZaAktinvost(String predmet,String newsAkt) {
 		
-	
-		return sub;
+		Pattern pattern = Pattern.compile(predmet,Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(newsAkt);
+		boolean isPronasao = matcher.find();
+		
+		return isPronasao;
 	}
-	
+
 	public Katedra getMmklab(String url, String predmet) {
 		
 		
@@ -464,7 +489,7 @@ public class DataFromSite {
 //
 			news = elements.select("h2.entry-title").get(0).text();
 //		    System.out.println(news);
-
+//			http://kvalitet.fon.bg.ac.rs/предмет/основне-студије/обавезни-предмети/
 			
 		} catch (Exception e) {
 			System.err.println("Greska: preuzimanje sa sajta!");

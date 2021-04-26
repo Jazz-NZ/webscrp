@@ -41,7 +41,7 @@ public class HomeController {
 	public String home() {
 		
 		DataFromSite data = new DataFromSite();
-		Katedra  neki =	data.getMath("http://math.fon.bg.ac.rs/vesti");
+//		Katedra  neki =	data.getMath("http://math.fon.bg.ac.rs/vesti");
 			
 		int id = 560;
 		
@@ -168,7 +168,7 @@ public class HomeController {
 		
 		for(int i = 0; i<list.size(); i++) {
 			
-			subjects.add( data.getMathAllVesti(mathUrl+list.get(i),list.get(i)));
+			subjects.add( data.getMath(mathUrl+list.get(i),list.get(i)));
 			
 			
 		}
