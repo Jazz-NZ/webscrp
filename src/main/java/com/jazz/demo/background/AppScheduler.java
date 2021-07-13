@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
-import com.jazz.demo.DataFromSite;
 import com.jazz.demo.NewNotification;
 import com.jazz.demo.background.database.DatabaseConnection;
 import com.jazz.demo.Katedra;
@@ -20,12 +19,6 @@ import com.jazz.demo.fcm.PushNotificationService;
 @Service
 public class AppScheduler {
 
-//	ProveriMath proveri = new ProveriMath();
-//	ProveriMMKLAB proveriMMKLAB = new ProveriMMKLAB();
-//	ProveriIS proveriIs = new ProveriIS();
-//	
-//	DataFromSite data = new DataFromSite();
-	
 
 	@Autowired
 	private PushNotificationService pushNotificaitonService;
@@ -35,17 +28,9 @@ public class AppScheduler {
 	}
 
 	// Executes each 500 ms
-	@Scheduled(fixedRate = 120000)
+	@Scheduled(fixedRate = 150000)
 	public void checkRecords() {
 		System.err.println("Proslo 120s");
-
-			//OSTALO : EKONOMIJA, HR , ENG
-		// I OVO TREBA DA SE CUVA U BAZI ? TABELA JOS JEDNA
-		
-		//parametri za dodatne predmete iz mate - obrisao sam ovu tabelu
-		//String urlKatedre = "http://math.fon.bg.ac.rs/";
-		//String imeTabeleUBazi = "predmetimathdodatni";
-		
 		
 		try { posaljiNotiSvimPredmetima();
 		
@@ -54,7 +39,6 @@ public class AppScheduler {
 			System.err.println("Greska za connection1"); 
 		}
 
-			 
 	}
 
 	private void posaljiNotiSvimPredmetima() throws SQLException {

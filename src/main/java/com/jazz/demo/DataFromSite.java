@@ -9,7 +9,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-//jebali smo mu kevu
 
 public class DataFromSite {
 
@@ -52,7 +51,7 @@ public class DataFromSite {
 	 * }
 	 */
 	
-public static Katedra getMathAktivnosti(String url, String predmet ) {
+public Katedra getMathAktivnosti(String url, String predmet) {
 		
 		//String url= "http://math.fon.bg.ac.rs/";
 		String news = null;
@@ -65,21 +64,15 @@ public static Katedra getMathAktivnosti(String url, String predmet ) {
 		try {
 			Document doc = Jsoup.connect(url).get();
 		
-			//System.out.println(doc);
-		
-			String title = doc.title();
-			//System.out.println("title : " + title);
-			
 			Elements elements = doc.select("ul.list-unstyled");
 		
-			// System.out.println(elements.select("li.recent-news-wrap").get(0));
-        
 			link  = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
         
 			news = elements.select("li.up-event-wrap").get(0).select("a").first().attr("title");
 			
-			
 			System.out.println(news);
+			System.out.println(link);
+			
 			
 			String checkStr = news.toLowerCase();
 			
@@ -90,8 +83,6 @@ public static Katedra getMathAktivnosti(String url, String predmet ) {
 			
 			//proverava dms, ako je dms salje se za dms samo
 			if(predmet.contains("dms")&&(checkStr.contains("диск")||checkStr.contains("дмс"))) {
-				
-		
 				return sub;
 			}
 			else if(predmet.contains("matematika1")&&(checkStr.contains("математик")&&checkStr.contains("1"))){
@@ -99,12 +90,13 @@ public static Katedra getMathAktivnosti(String url, String predmet ) {
 				
 			}else if(predmet.contains("matematika2")&&(checkStr.contains("математик")&&checkStr.contains("2"))){
 				return sub;
-				
 			}
 			else if(predmet.contains("matematika3")&&(checkStr.contains("математик")&&checkStr.contains("3"))){
 				return sub;
 			
 			}
+			else if(predmet.contains("analiza") && (checkStr.contains("анализе")))
+				return sub;
 			
 			//ako je pojedinacni onda je pismenog usmenog itd
 			else if(checkStr.contains("писмених")&&checkStr.contains("усмених")&&checkStr.contains("писменог колоквијума")) {
@@ -120,35 +112,28 @@ public static Katedra getMathAktivnosti(String url, String predmet ) {
 		}catch (Exception e) {
 			System.err.println("Error with connecting to url or getting data from url");
 		}
-return sub;
+		
+		return sub;
 		}
 
 	
-public static Katedra getMath(String url, String predmet) {
+public Katedra getMath(String url, String predmet) {
 	
 	//String url= "http://math.fon.bg.ac.rs/kursevi/";
 	String news = null;
 	String link = null;
 	try {
-		Document doc = Jsoup.connect(url+predmet).get();
+		Document doc = Jsoup.connect(url).get();
 
-		//System.out.println(doc);
-
-		//String title = doc.title();
-        //System.out.println("title : " + title);
 
         Elements elements = doc.select("ul.list-unstyled");
         
-       
-
          news = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
-//         System.out.println(news);
-        
-         System.out.println(news);
          
-         link = url + predmet;
+         link = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
          
-        
+         link = "http://math.fon.bg.ac.rs" + link;
+         
 	}catch(Exception e) {
 		System.out.println("Check url or network!");
 	}
@@ -163,142 +148,6 @@ public static Katedra getMath(String url, String predmet) {
 	
 }
 	
-	
-	
-	public Katedra getMath1(String url, String predmet) {
-
-		Katedra katedra = new Katedra();
-
-		String linkVesti = null;
-		String newsVesti = null;
-		String dateAndTimeVesti = null;
-		String danVesti = null;
-		String mesecVesti = null;
-		String godinaVesti = null;
-
-		String linkAkt = null;
-		String newsAkt = null;
-		String dateAkt = null;
-		String danAkt = null;
-		String mesecAkt = null;
-		String godinaAkt = null;
-
-		try {
-			Document doc = Jsoup.connect(url).get();
-
-			Elements elements = doc.select("ul.list-unstyled");
-
-			// WEBSCRAPE VESTI:
-			linkVesti = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("href");
-			newsVesti = elements.select("li.recent-news-wrap").get(0).select("a").first().attr("title");
-			dateAndTimeVesti = elements.select("div.recent-news-date").get(0).text();
-			linkVesti = "http://math.fon.bg.ac.rs" + linkVesti;
-
-			// WEBSCRAPE AKTIVNOSTI:
-			linkAkt = elements.select("li.up-event-wrap").get(0).select("a").first().attr("href");
-			newsAkt = elements.select("li.up-event-wrap").get(0).select("a").first().attr("title");
-			dateAkt = elements.select("div.up-event-date").get(0).text();
-			linkAkt = "http://math.fon.bg.ac.rs" + linkAkt;
-
-		} catch (Exception e) {
-			System.err.println("Error with connecting to url or getting data from url");
-		}
-
-		// formatiranje datuma za vesti
-		String nizDateAndTimeVesti[] = dateAndTimeVesti.split(" ");
-		String datumVestiSplit = nizDateAndTimeVesti[0];
-		String datumVesti[] = datumVestiSplit.split("\\.");
-		danVesti = datumVesti[0];
-		mesecVesti = datumVesti[1];
-		godinaVesti = datumVesti[2];
-
-		// fromatiranje datuma za aktivnosti
-		String nizDateAkt[] = dateAkt.split("\\.");
-		danAkt = nizDateAkt[0];
-		mesecAkt = nizDateAkt[1];
-		godinaAkt = nizDateAkt[2];
-
-		// true - poslednja izasla aktivnost, false - vest
-		boolean poslednjiDatum = proveriDatume(godinaAkt, godinaVesti, mesecAkt, mesecVesti, danAkt, danVesti);
-
-		// posalji aktivnost za proveravani predmet
-		if (proveraPredmetaZaAktinvost("Математике 1", newsAkt) && predmet == "matematika1" && poslednjiDatum) {
-
-			katedra.setPoruka(newsAkt);
-			katedra.setPredmet(predmet);
-			katedra.setLink(linkAkt);
-
-		}
-
-		else if (proveraPredmetaZaAktinvost("Математике 2", newsAkt) && predmet == "matematika2" && poslednjiDatum) {
-
-			katedra.setPoruka(newsAkt);
-			katedra.setPredmet(predmet);
-			katedra.setLink(linkAkt);
-		}
-
-		else if (proveraPredmetaZaAktinvost("Математике 3", newsAkt) && predmet == "matematika3" && poslednjiDatum) {
-
-			katedra.setPoruka(newsAkt);
-			katedra.setPredmet(predmet);
-			katedra.setLink(linkAkt);
-		}
-
-		else if ((proveraPredmetaZaAktinvost("ДМСа", newsAkt) || proveraPredmetaZaAktinvost("ДМС-а", newsAkt))
-				&& predmet == "dms" && poslednjiDatum) {
-
-			katedra.setPoruka(newsAkt);
-			katedra.setPredmet(predmet);
-			katedra.setLink(linkAkt);
-		}
-
-		// posalji aktivnost svim predmetima
-		else if (!proveraPredmetaZaAktinvost("Математике 1", newsAkt)
-				&& !proveraPredmetaZaAktinvost("Математике 2", newsAkt)
-				&& !proveraPredmetaZaAktinvost("Математике 3", newsAkt) && !proveraPredmetaZaAktinvost("ДМСа", newsAkt)
-				&& !proveraPredmetaZaAktinvost("ДМС-а", newsAkt) && poslednjiDatum) {
-
-			katedra.setPoruka(newsAkt);
-			katedra.setPredmet(predmet);
-			katedra.setLink(linkAkt);
-
-		}
-		// posalji vest
-		else {
-
-			katedra.setPoruka(newsVesti);
-			katedra.setPredmet(predmet);
-			katedra.setLink(linkVesti);
-		}
-		return katedra;
-	}
-
-	private boolean proveriDatume(String godinaAkt, String godinaVesti, String mesecAkt, String mesecVesti,
-			String danAkt, String danVesti) {
-
-		if (Integer.parseInt(godinaAkt) > Integer.parseInt(godinaVesti))
-			return true;
-
-		else if (Integer.parseInt(mesecAkt) > Integer.parseInt(mesecVesti))
-			return true;
-
-		else if (Integer.parseInt(danAkt) > Integer.parseInt(danVesti))
-			return true;
-
-		else
-			return false;
-
-	}
-
-	// proverava da li se naziv predmeta nalazi u aktivnosti
-	private boolean proveraPredmetaZaAktinvost(String predmet, String newsAkt) {
-
-		Pattern pattern = Pattern.compile(predmet, Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(newsAkt);
-		boolean isPronasao = matcher.find();
-
-		return isPronasao;
-	}
 
 	public Katedra getMmklab(String url, String predmet) {
 
@@ -751,32 +600,12 @@ public static Katedra getMath(String url, String predmet) {
 		try {
 			Document doc = Jsoup.connect(url).get();
 
-			// System.out.println(doc);
-
-			// String title = doc.title();
-			// System.out.println("title : " + title);
-
 			Elements elements = doc.select("div.post-grid-text-wrap");
-			// System.out.println(elements);
-
-			System.out.println(elements.select("h3.title").get(0));
 
 			link = elements.select("h3.title").get(0).select("a").first().attr("href");
 
-			System.out.println(link);
-
-			// id pravi problem, treba pretresti web scrape
-			// id = Integer.parseInt(idStr.substring(7));
-
 			news = elements.select("h3.title").get(0).select("a").text();
-			System.out.println(news);
-			// news = news.replace("Permalink to ", "");
-			// System.out.println(news);
 
-			String s = news.toLowerCase();
-
-			if (s.contains("sociologija"))
-				System.out.println(news);
 
 		} catch (Exception e) {
 			System.err.println("Error with connecting to url or getting data from url");
@@ -785,8 +614,25 @@ public static Katedra getMath(String url, String predmet) {
 		sub.setLink(link);
 		sub.setPoruka(news);
 		sub.setPredmet(predmet);
+		
+		String checkStr = news.toLowerCase();
 
-		return sub;
+		if(predmet.equals("psihologija") && checkStr.contains("psiho"))
+			return sub;
+		else if(predmet.equals("sociologija") && checkStr.contains("socio"))
+			return sub;
+		else if(predmet.equals("mljr") && (checkStr.contains("mljr") || checkStr.contains("menadžment")))
+			return sub;
+		else if(predmet.equals("trening-i-razvoj") && checkStr.contains("trening"))
+			return sub;
+		else if(predmet.equals("e-obrazovanje") && checkStr.contains("e-obrazovanje"))
+			return sub;
+		else if(predmet.equals("vodstvo-i-motivisanje") && checkStr.contains("vođstvo"))
+			return sub;
+		else {
+			sub.setPoruka(null);
+			return sub;
+		}
 	}
 
 	public Katedra getFinansije(String url, String predmet) {
@@ -838,29 +684,16 @@ public static Katedra getMath(String url, String predmet) {
 
 		String news = null;
 		String link = null;
-		// String url = "http://eng.fon.bg.ac.rs/?cat=4";
 
 		try {
 			Document doc = Jsoup.connect(url).get();
 
-			// System.out.println(doc);
-
-			// String title = doc.title();
-			// System.out.println("title : " + title);
-
 			Elements elements = doc.select("h1.entry-title");
-			System.out.println(elements.select("h1.entry-title").get(0));
 
 			link = elements.select("h1.entry-title").get(0).select("a").first().attr("href");
-			System.out.println(link);
-
-			// id pravi problem, treba pretresti web scrape
 
 			news = elements.select("h1.entry-title").get(0).text();
-			System.out.println(news);
-			String s = news.replace(" ", "");
-			if (s.charAt(3) == '2')
-				System.out.println(news);
+		
 		} catch (Exception e) {
 			System.err.println("Greska: preuzimanje sa sajta!");
 		}
@@ -869,8 +702,20 @@ public static Katedra getMath(String url, String predmet) {
 		sub.setLink(link);
 		sub.setPoruka(news);
 		sub.setPredmet(predmet);
-
-		return sub;
+		
+		String checkStr = news.toLowerCase();
+		
+		if(predmet.equals("engleski1") && checkStr.contains("1"))
+			return sub;
+		else if(predmet.equals("engleski2") && checkStr.contains("2"))
+			return sub;
+		else if(predmet.equals("engleski3") && checkStr.contains("3"))
+			return sub;
+		else {
+			sub.setPoruka(null);
+			return sub;
+		}
+		
 	}
 
 	public Katedra getEkonomija(String url, String predmet) {

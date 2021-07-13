@@ -132,7 +132,10 @@ public class ProveriKatedru {
 
 			//ona 4 predmeta 
 			case "predmetimath":
-				return  data.getMath(urlKatedre + predmetUBazi, predmetUBazi); 
+				return data.getMath(urlKatedre + predmetUBazi, predmetUBazi); 
+				
+			case "predmetimathaktivnosti":
+				return data.getMathAktivnosti(urlKatedre, predmetUBazi);
 				
 			//softver-otvorenog-koda, upravljanje-softverskim-projektima, veb-programiranje nemaju vesti	
 			case "predmetiai":
@@ -176,6 +179,15 @@ public class ProveriKatedru {
 			//dobar webscrp,ne znam zasto ne radi
 			case "predmetikvalitet":
 				return data.getKvalitet(urlKatedre + predmetUBazi + "/", predmetUBazi);
+				
+			case "predmetiekonomija":
+				return data.getEkonomija(urlKatedre + "novosti", predmetUBazi);
+				
+			case "predmetihr":
+				return data.getHr(urlKatedre, predmetUBazi);
+				
+			case "predmetieng":
+				return data.getEng(urlKatedre, predmetUBazi);
 				
 		}
 		
