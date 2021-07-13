@@ -88,7 +88,7 @@ public static Katedra getMathAktivnosti(String url, String predmet ) {
 			sub.setLink(link);
 
 			
-			
+			//proverava dms, ako je dms salje se za dms samo
 			if(predmet.contains("dms")&&(checkStr.contains("диск")||checkStr.contains("дмс"))) {
 				
 		
@@ -105,6 +105,8 @@ public static Katedra getMathAktivnosti(String url, String predmet ) {
 				return sub;
 			
 			}
+			
+			//ako je pojedinacni onda je pismenog usmenog itd
 			else if(checkStr.contains("писмених")&&checkStr.contains("усмених")&&checkStr.contains("писменог колоквијума")) {
 				return sub;
 				
